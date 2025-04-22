@@ -1,0 +1,250 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+}
+
+.center-content {
+  position: relative;
+  z-index: 2;
+  margin-top: -10%;
+}
+
+.title {
+  font-size: 80px;
+  font-weight: bold;
+  color: #41c23a;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 1s ease-out;
+}
+
+.title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sub-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-size: 30px;
+  font-style: italic;
+  color: #c60606;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 1s ease-out;
+}
+
+.sub-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.item {
+  margin: 0;
+}
+
+.left-footer-group {
+  position: absolute;
+  left: 5%;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  z-index: 2;
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 1s ease-out;
+}
+
+.left-footer-group.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.right-footer-group {
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  text-align: right;
+  z-index: 2;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 1s ease-out;
+}
+
+.right-footer-group.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.footer-text {
+  font-size: 40px;
+  font-weight: bold;
+  color: #41c23a;
+}
+
+.footer-subtext {
+  font-size: 1rem;
+  font-style: italic;
+  color: #ffffff;
+}
+
+.side-text {
+  font-size: 40px;
+  font-weight: bold;
+  color: #41c23a;
+}
+
+@media screen and (max-width: 1100px) {
+  .title {
+    font-size: 60px;
+  }
+
+  .sub-title {
+    font-size: 24px;
+    gap: 0.8rem;
+  }
+
+  .footer-text, .side-text {
+    font-size: 30px;
+  }
+
+  .footer-subtext {
+    font-size: 0.8rem;
+  }
+
+  .left-footer-group, .right-footer-group {
+    position: relative;
+    bottom: 5%;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 50px;
+  }
+
+  .sub-title {
+    font-size: 20px;
+    gap: 0.5rem;
+  }
+
+  .footer-text, .side-text {
+    font-size: 25px;
+  }
+
+  .footer-subtext {
+    font-size: 0.7rem;
+  }
+
+  .left-footer-group, .right-footer-group {
+    position: relative;
+    bottom: 5%;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    align-items: center;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100px); /* Bắt đầu từ dưới */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Kết thúc tại vị trí ban đầu */
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px); /* Bắt đầu từ bên phải */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* Kết thúc tại vị trí ban đầu */
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px); /* Bắt đầu từ bên trái */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* Kết thúc tại vị trí ban đầu */
+  }
+}
+
+.slide-up {
+  opacity: 0;
+  animation: slideUp 1s ease-out forwards; /* Hiệu ứng di chuyển lên từ dưới */
+}
+
+.slide-right {
+  opacity: 0;
+  animation: slideRight 1s ease-out forwards; /* Hiệu ứng di chuyển từ phải qua trái */
+}
+
+.slide-left {
+  opacity: 0;
+  animation: slideLeft 1s ease-out forwards; /* Hiệu ứng di chuyển từ trái qua phải */
+}
+
+.main-content .title,
+.main-content .sub-title {
+  opacity: 0;
+  transform: translateY(100px); /* Bắt đầu từ dưới */
+}
+
+.main-content .title.visible,
+.main-content .sub-title.visible {
+  animation: slideUp 1s ease-out forwards;
+}
+
+.main-content .right-footer-group {
+  opacity: 0;
+  transform: translateX(100px); /* Bắt đầu từ bên phải */
+}
+
+.main-content .right-footer-group.visible {
+  animation: slideRight 1s ease-out forwards;
+}
+
+.main-content .left-footer-group {
+  opacity: 0;
+  transform: translateX(-100px); /* Bắt đầu từ bên trái */
+}
+
+.main-content .left-footer-group.visible {
+  animation: slideLeft 1s ease-out forwards;
+}
+  
