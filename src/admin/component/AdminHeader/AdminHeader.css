@@ -1,109 +1,126 @@
-.header {
-    backdrop-filter: blur(0); /* Không có mờ khi chưa cuộn */
-    background-color: rgba(0, 0, 0, 0.25); /* Mờ nhẹ cho nền */
-    transition: all 0.3s ease; /* Hiệu ứng chuyển mượt */
+.header-admin {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
     width: 100%;
-    position: fixed; /* Fix header ở trên cùng */
-    top: 0; /* Đặt header ở trên đầu trang */
-    left: 0; /* Đảm bảo header kéo dài từ trái sang phải */
-    z-index: 1000; /* Đảm bảo header ở trên các phần tử khác */
-  }
-  header.scrolled {
-    backdrop-filter: blur(10px); /* Thêm độ mờ cho nền */
-    background-color: rgba(0, 0, 0, 0.4); /* Tối nền khi cuộn */
-  }
-  
-  .header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.header-admin-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .logo a {
-    color: #ffffff;
+}
+
+.logo-admin a {
+    color: #333333;
     font-weight: bold;
     text-decoration: none;
     font-size: 40px;
-    font-style: italic; /* Tạo hiệu ứng chữ nghiêng nhẹ */
-  }
-  
-  .nav {
+    font-style: italic;
+}
+
+.nav-admin {
     display: flex;
     gap: 2rem;
     position: absolute;
     left: 50%;
-    transform: translateX(-50%); /* Căn giữa các mục */
-  }
-  
-  .nav a {
-    color: #ffffff;
+    transform: translateX(-50%);
+}
+
+.nav-admin a {
+    color: #333333;
     text-decoration: none;
     font-size: 20px;
     transition: color 0.3s ease;
     display: flex;
-    align-items: center; /* Căn chỉnh icon với text */
-  }
-  
-  .nav a i {
-    margin-right: 8px; /* Khoảng cách giữa icon và text */
-  }
-  
-  .nav a:hover {
+    align-items: center;
+}
+
+.nav-admin a i {
+    margin-right: 8px;
+    color: #333333;
+}
+
+.nav-admin a:hover {
     color: #a855f7;
-  }
-  
-  /* Button Style */
-  .world-button {
+}
+
+.nav-admin a:hover i {
+    color: #a855f7;
+}
+
+.world-button-admin {
     padding: 10px 20px;
     background-color: transparent;
-    color: white;
+    color: #333333;
     border: none;
     border-radius: 20px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border: 3px solid #ffffff;
-    color: #ffffff;
-  }
-  
-  .world-button:hover {
+    border: 3px solid #333333;
+}
+
+.world-button:hover {
     background-color: #a855f7;
-  }
-  
-  /* Media Query for Mobile */
-  @media (max-width: 768px) {
+    color: #ffffff;
+    border-color: #a855f7;
+}
+
+@media (max-width: 768px) {
     .header-container {
-      padding: 0 1rem;
-      flex-direction: column; /* Sắp xếp logo và nav theo chiều dọc */
-      align-items: flex-start; /* Căn trái logo */
+        padding: 0 1rem;
+        flex-direction: column;
+        align-items: flex-start;
     }
-  
+
     .logo a {
-      font-size: 30px; /* Giảm kích thước logo trên màn hình nhỏ */
+        font-size: 30px;
     }
-  
+
     .nav {
-      position: static; /* Thay đổi vị trí các mục nav */
-      transform: none; /* Không cần translateX nữa */
-      flex-direction: column; /* Xếp dọc các mục */
-      gap: 1rem;
-      margin-top: 1rem; /* Tạo khoảng cách giữa logo và menu */
-      align-items: flex-start; /* Căn trái menu */
+        position: static;
+        transform: none;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+        align-items: flex-start;
     }
-  
+
     .nav a {
-      font-size: 18px; /* Giảm font-size cho các mục menu */
-      padding: 8px 0; /* Tăng khoảng cách cho dễ bấm */
+        font-size: 18px;
+        padding: 8px 0;
     }
-  
-    /* Button */
+
     .world-button {
-      width: 100%; /* Làm button rộng đầy màn hình */
-      margin-top: 1rem; /* Tạo khoảng cách giữa button và menu */
+        width: 100%;
+        margin-top: 1rem;
     }
+}
+.logout-button-admin {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 120px;
   }
+  
+  .logout-button-admin:hover {
+    background-color: #c0392b;
+  }
+  
   

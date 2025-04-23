@@ -1,12 +1,13 @@
 import React from 'react'
 import AdminHeader from '../component/AdminHeader/AdminHeader'
 
-const AdminHome = () => {
+const HomepageAdmin = () => {
   return (
     <div>
-        <AdminHeader />
+       
+        
     </div>
   )
 }
 
-export default AdminHome
+export default HomepageAdmin;

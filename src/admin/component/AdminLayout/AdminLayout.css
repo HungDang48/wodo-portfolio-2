@@ -1,0 +1,10 @@
+.admin-layout {
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+.admin-main {
+  padding-top: 80px; /* Space for fixed header */
+  min-height: calc(100vh - 80px);
+  background-color: #ffffff;
+} 

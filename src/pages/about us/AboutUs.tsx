@@ -17,7 +17,7 @@ const AboutUs = () => {
 
   useEffect(() => {
     // Gọi API khi component được render
-    fetch("http://localhost:5000/User")
+    fetch("https://wodo-portfolio-backend-production.up.railway.app/User")
       .then(response => response.json()) // Chuyển đổi dữ liệu nhận được thành JSON
       .then(data => setMembers(data)) // Lưu dữ liệu vào state
       .catch(error => console.error("Error fetching data:", error)); // Xử lý lỗi
@@ -28,13 +28,20 @@ const AboutUs = () => {
       <h1 className="about-title">Ban điều hành</h1>
       <div className="cards-container">
         {members.map((member, index) => (
-          <div key={index} className="member-card">
+          <div key={index} className="member-card" style={{ animationDelay: `${index * 0.2}s` }}>
             <img src={member.avatar} alt={member.name} className="member-image" />
             <h2 className="member-name">
               {member.name} <span className="unit">({member.unit})</span>
             </h2>
             <p className="member-role">{member.role}</p>
+            {/* Hiển thị personality trong card */}
             <p className="member-personality">"{member.personality}"</p>
+        
+            {/* Overlay */}
+            <div className="card-overlay">
+              <p className="overlay-personality">"{member.personality}"</p>
+              <button className="overlay-button">Tìm hiểu thêm</button>
+            </div>
           </div>
         ))}
       </div>

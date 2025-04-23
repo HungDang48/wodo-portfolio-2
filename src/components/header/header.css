@@ -24,7 +24,7 @@ header.scrolled {
 }
 
 .logo a {
-  color: #ffffff;
+  color: #13b513;
   font-weight: bold;
   text-decoration: none;
   font-size: 40px;
@@ -37,6 +37,7 @@ header.scrolled {
   position: absolute;
   left: 50%;
   transform: translateX(-50%); /* Căn giữa các mục */
+  color: #ffffff;
 }
 
 .nav a {
@@ -50,9 +51,14 @@ header.scrolled {
 
 .nav a i {
   margin-right: 8px; /* Khoảng cách giữa icon và text */
+  color: #ffffff;
 }
 
 .nav a:hover {
+  color: #a855f7;
+}
+
+.nav a:hover i {
   color: #a855f7;
 }
 
@@ -60,18 +66,20 @@ header.scrolled {
 .world-button {
   padding: 10px 20px;
   background-color: transparent;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   border: 3px solid #ffffff;
-  color: #ffffff;
+  width: 300px;
 }
 
 .world-button:hover {
   background-color: #a855f7;
+  color: #ffffff;
+  border-color: #a855f7;
 }
 
 /* Media Query for Mobile */

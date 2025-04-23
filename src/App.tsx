@@ -3,9 +3,10 @@ import Layout from './components/Layout/layout';
 import Home from './pages/Home';
 import AboutUs from './pages/about us/AboutUs';
 import ProtectedRoute from './admin/component/ProtectedRoute/ProtectedRoute';
-import AdminHome from './admin/page/AdminHome';
 import LoginAdmin from './admin/page/loginAdmin/LoginAdmin';
- 
+import HomepageAdmin from './admin/page/HomepageAdmin';
+import AdminLayout from './admin/component/AdminLayout/AdminLayout';
+import ProfileAdmin from './admin/page/InfoAdmin/ProfileAdmin';
  
 
 function App() {
@@ -14,12 +15,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/AboutUs" element={<Layout><AboutUs /></Layout>} />
-        <Route path="/admin/login" element={<LoginAdmin />} />
+        <Route path="/ProfileAdmin" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />
+
+        <Route path="/LoginAdmin" element={<LoginAdmin />} />
         <Route
-          path="/AdminHome"
+          path="/HomepageAdmin"
           element={
             <ProtectedRoute>
-              <AdminHome />
+              <AdminLayout><HomepageAdmin /></AdminLayout>
             </ProtectedRoute>
           }
         />

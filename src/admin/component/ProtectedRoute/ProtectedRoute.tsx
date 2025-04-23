@@ -6,10 +6,10 @@ interface Props {
 }
 
 const ProtectedRoute: React.FC<Props> = ({ children }) => {
-  const adminInfo = localStorage.getItem("adminInfo");
+  const adminInfo = localStorage.getItem("admin");
 
   if (!adminInfo) {
-    return <Navigate to="/admin/login" replace />;
+    return <Navigate to="/LoginAdmin" replace />;
   }
 
   return children;
