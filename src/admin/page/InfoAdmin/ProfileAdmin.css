@@ -393,3 +393,13 @@
   margin-left: 40px;
     
 }
+.preview-avatar {
+  margin-top: 10px;
+}
+.avatar-preview-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}

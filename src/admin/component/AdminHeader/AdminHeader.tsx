@@ -23,10 +23,10 @@ const AdminHeader = () => {
           <Link to="/ProfileAdmin">
             <i className="fa fa-info-circle"></i> profile
           </Link>
-          <Link to="#">
+          <Link to="/ProjectAdmin">
             <i className="fa fa-project-diagram"></i> Dự án
           </Link>
-          <Link to="#">
+          <Link to="/BlogAdmin">
             <i className="fa fa-donate"></i> blog
           </Link>
         </nav>

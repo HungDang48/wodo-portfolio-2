@@ -7,6 +7,9 @@ import LoginAdmin from './admin/page/loginAdmin/LoginAdmin';
 import HomepageAdmin from './admin/page/HomepageAdmin';
 import AdminLayout from './admin/component/AdminLayout/AdminLayout';
 import ProfileAdmin from './admin/page/InfoAdmin/ProfileAdmin';
+import ProjectAdmin from './admin/page/projectAdmin/ProjectAdmin';
+import MoreAbout from './pages/MoreAbout/MoreAbout';
+import BlogAdmin from './admin/page/BlogAdmin/BlogAdmin';
  
 
 function App() {
@@ -15,7 +18,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/AboutUs" element={<Layout><AboutUs /></Layout>} />
+         
+        <Route path="/MoreAbout/:id" element={<Layout><MoreAbout /></Layout>} />
+
         <Route path="/ProfileAdmin" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />
+        <Route path="/ProjectAdmin" element={<AdminLayout><ProjectAdmin /></AdminLayout>} />
+        <Route path="/BlogAdmin" element={<AdminLayout><BlogAdmin /></AdminLayout>} />
 
         <Route path="/LoginAdmin" element={<LoginAdmin />} />
         <Route
