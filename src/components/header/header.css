@@ -1,18 +1,16 @@
 .header {
-  backdrop-filter: blur(0); /* Không có mờ khi chưa cuộn */
-  background-color: rgba(0, 0, 0, 0.25); /* Mờ nhẹ cho nền */
-  transition: all 0.3s ease; /* Hiệu ứng chuyển mượt */
+  /* backdrop-filter: blur(0);  Xoá hẳn nếu không dùng */
+  background-color: #4D006E; /* Dùng màu nền đặc thay vì rgba */
+  transition: all 0.3s ease;
   padding: 1rem 0;
   width: 100%;
-  position: fixed; /* Fix header ở trên cùng */
-  top: 0; /* Đặt header ở trên đầu trang */
-  left: 0; /* Đảm bảo header kéo dài từ trái sang phải */
-  z-index: 1000; /* Đảm bảo header ở trên các phần tử khác */
+  top: 0;
+  left: 0;
+  
+  z-index: 1000;
 }
-header.scrolled {
-  backdrop-filter: blur(10px); /* Thêm độ mờ cho nền */
-  background-color: rgba(0, 0, 0, 0.4); /* Tối nền khi cuộn */
-}
+
+ 
 
 .header-container {
   max-width: 1200px;
