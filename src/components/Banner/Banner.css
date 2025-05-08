@@ -1,0 +1,297 @@
+.banner {
+  width: 100%;
+  margin-top: 0px; /* Đảm bảo sát dưới Header */
+  /* border: 2px solid green; */
+  
+}
+
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  margin-top: 0px;
+  opacity: 0; /* Bắt đầu với độ mờ */
+  transition: opacity 2.1s ease-in-out; /* Hiệu ứng mờ dần */
+}
+
+/* Khi ảnh đã load xong, áp dụng lớp "loaded" */
+.banner-image.loaded {
+  opacity: 1;
+}
+
+/* Logo overlay đè lên ảnh */
+.overlay-logos {
+  position: absolute;
+  top: 90px;
+  right: 81px;
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.overlay-logos .logo {
+   
+  height: auto;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: popup 1s ease-out forwards;
+}
+
+/* Hiện ra lần lượt mỗi logo */
+.overlay-logos .logo:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.overlay-logos .logo:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.overlay-logos .logo:nth-child(3) {
+  animation-delay: 0.9s;
+}
+.overlay-logos .logo:nth-child(4) {
+  animation-delay: 1.2s;
+}
+@keyframes popup {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+.logo {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  opacity: 1; /* không làm mờ */
+  margin-top: 10px;
+ 
+}
+
+
+.left-logo-group {
+  position: absolute;
+  top: 145px;
+  left: -300px; /* Bắt đầu ở ngoài màn hình bên trái */
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+  height: 80px;
+  animation: slideIn 3.5s forwards; /* Áp dụng animation slideIn */
+}
+
+@keyframes slideIn {
+  0% {
+    left: -400px; /* Bắt đầu từ ngoài màn hình trái */
+  }
+  100% {
+    left: 20px; /* Đến vị trí cuối cùng (tương ứng với giá trị left mà bạn muốn) */
+  }
+}
+
+/* Các phần tử con bên trong vẫn giữ nguyên kiểu dáng */
+.logo {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+.left-logo-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.left-logo-text1 {
+  font-size: 25px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 9px rgba(0, 0, 0, 0.6); /* Đổ bóng mềm */
+}
+
+.left-logo-text2 {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5); /* Đổ bóng nhẹ */
+}
+
+@media (max-width: 1500px) {
+  .logo {
+    width: 60px;
+  }
+
+  .left-logo-text1 {
+    font-size: 22px;
+  }
+
+  .left-logo-text2 {
+    font-size: 14px;
+  }
+
+  
+
+  .left-logo-group {
+    left: 60px;
+    top: 130px; /* Giảm từ 145px xuống */
+  }
+}
+
+@media (max-width: 1250px) {
+  .logo {
+    width: 50px;
+  }
+
+  .left-logo-text1 {
+    font-size: 20px;
+  }
+
+  .left-logo-text2 {
+    font-size: 12px;
+  }
+
+ 
+
+  .left-logo-group {
+    left: 50px;
+    top: 130px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .logo {
+    width: 45px;
+  }
+
+  .left-logo-text1 {
+    font-size: 18px;
+  }
+
+  .left-logo-text2 {
+    font-size: 10px;
+  }
+
+ 
+
+  .left-logo-group {
+    left: 45px;
+    top: 130px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .logo {
+    width: 40px;
+  }
+
+  .left-logo-text1 {
+    font-size: 14px;
+  }
+
+  .left-logo-text2 {
+    font-size: 8px;
+  }
+
+  .overlay-logos {
+    right: 30px;
+    
+  }
+
+  .left-logo-group {
+    left: 40px;
+    top: 115px;
+  }
+}
+@media (max-width: 770px) {
+  .logo {
+    width: 30px;
+  }
+
+  .left-logo-text1 {
+    font-size: 12px;
+  }
+
+  .left-logo-text2 {
+    font-size: 6px;
+  }
+  .overlay-logos {
+    right: 30px;
+    top: 67px;
+  }
+  
+
+  .left-logo-group {
+    left: 30px;
+    top: 95px;
+  }
+}
+@media (max-width: 670px) {
+  .logo {
+    width: 25px;
+  }
+
+  .left-logo-text1 {
+    font-size: 11px;
+  }
+
+  .left-logo-text2 {
+    font-size: 6px;
+  }
+
+ 
+
+  .left-logo-group {
+    left: 25  px;
+    top: 90px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .logo {
+    width: 20px;
+  }
+
+  .left-logo-text1 {
+    font-size: 7px;
+  }
+
+  .left-logo-text2 {
+    font-size: 5px;
+  }
+
+  
+  .left-logo-group {
+    left: 20px;
+    top: 87px;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo {
+    width: 20px;
+  }
+
+  .left-logo-text1 {
+    font-size: 5px;
+  }
+
+  .left-logo-text2 {
+    font-size: 5px;
+  }
+
+  
+
+  .left-logo-group {
+    left: 20px;
+    top: 85px;
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Home.css';
-import Banner from '../admin/component/Banner/Banner';
+import Banner from '../components/Banner/Banner';
+import HomeInfo from '../components/HomeInfo/HomeInfo';
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,6 +13,7 @@ const Home = () => {
   return (
     <div className="main-content">
       <Banner/>
+      <HomeInfo/>
       {/* <video 
         className="background-video"
         autoPlay 
@@ -30,14 +32,14 @@ const Home = () => {
           <p className="item">
           WOULD DO</p>
         </div>
-      </div> */}
+      </div>
 
-      {/* <div className={`left-footer-group ${isVisible ? 'visible' : ''}`}>
+      <div className={`left-footer-group ${isVisible ? 'visible' : ''}`}>
         <p className="footer-text">PATHFINDER SCOUTS VIETNAM </p>
         <p className="footer-subtext"></p>
-      </div> */}
+      </div>
 
-      {/* <div className={`right-footer-group ${isVisible ? 'visible' : ''}`}>
+      <div className={`right-footer-group ${isVisible ? 'visible' : ''}`}>
         <p className="side-text">BETTER WORLD CAMP 2025</p>
         <p className="footer-subtext">vì tha nhân, vì một xã hội tốt đẹp</p>
       </div> */}

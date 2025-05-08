@@ -1,18 +1,14 @@
-.header {
-  /* backdrop-filter: blur(0);  Xoá hẳn nếu không dùng */
-  background-color: #4D006E; /* Dùng màu nền đặc thay vì rgba */
+.header-user {
+  background-color: #4D006E;
   transition: all 0.3s ease;
   padding: 1rem 0;
   width: 100%;
   top: 0;
   left: 0;
-  
   z-index: 1000;
 }
 
- 
-
-.header-container {
+.header-user-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
@@ -21,12 +17,18 @@
   align-items: center;
 }
 
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .logo a {
   color: #13b513;
   font-weight: bold;
   text-decoration: none;
   font-size: 40px;
-  font-style: italic; /* Tạo hiệu ứng chữ nghiêng nhẹ */
+  font-style: italic;
 }
 
 .nav {
@@ -34,7 +36,7 @@
   gap: 2rem;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%); /* Căn giữa các mục */
+  transform: translateX(-50%);
   color: #ffffff;
 }
 
@@ -44,11 +46,11 @@
   font-size: 20px;
   transition: color 0.3s ease;
   display: flex;
-  align-items: center; /* Căn chỉnh icon với text */
+  align-items: center;
 }
 
 .nav a i {
-  margin-right: 8px; /* Khoảng cách giữa icon và text */
+  margin-right: 8px;
   color: #ffffff;
 }
 
@@ -60,7 +62,6 @@
   color: #a855f7;
 }
 
-/* Button Style */
 .world-button {
   padding: 10px 20px;
   background-color: transparent;
@@ -80,35 +81,69 @@
   border-color: #a855f7;
 }
 
-/* Media Query for Mobile */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ------------------ MOBILE STYLES ------------------ */
 @media (max-width: 768px) {
-  .header-container {
-    padding: 0 1rem;
-    flex-direction: column; /* Sắp xếp logo và nav theo chiều dọc */
-    align-items: flex-start; /* Căn trái logo */
+  .nav,
+  .world-button {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    font-size: 1.6rem;
+  }
+
+  .header-user {
+    padding: 0.3rem 0;
+  }
+
+  .header-user-container{
+    padding: 0 0.5rem;
   }
 
   .logo a {
-    font-size: 30px; /* Giảm kích thước logo trên màn hình nhỏ */
+    font-size: 22px;
   }
 
-  .nav {
-    position: static; /* Thay đổi vị trí các mục nav */
-    transform: none; /* Không cần translateX nữa */
-    flex-direction: column; /* Xếp dọc các mục */
+  .left-group {
+    gap: 0.5rem;
+  }
+
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 200px;
+    height: 100vh;
+    background-color: #4D006E;
+    padding: 1.5rem 0.8rem;
+    flex-direction: column;
     gap: 1rem;
-    margin-top: 1rem; /* Tạo khoảng cách giữa logo và menu */
-    align-items: flex-start; /* Căn trái menu */
+    transition: left 0.3s ease;
+    z-index: 999;
   }
 
-  .nav a {
-    font-size: 18px; /* Giảm font-size cho các mục menu */
-    padding: 8px 0; /* Tăng khoảng cách cho dễ bấm */
+  .mobile-nav.active {
+    left: 0;
   }
 
-  /* Button */
-  .world-button {
-    width: 100%; /* Làm button rộng đầy màn hình */
-    margin-top: 1rem; /* Tạo khoảng cách giữa button và menu */
+  .mobile-nav a {
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .mobile-nav a:hover {
+    color: #a855f7;
   }
 }
