@@ -1,15 +1,26 @@
 .about-container {
   padding: 2rem;
-  min-height: 100vh;
+  height: auto;
+  margin: 30px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  margin-top: 50px;
+  width: 100%;
+  max-width: 1950px;
+  border-radius: 20px;
+ 
+ 
+  /* margin-top: -190px;
+  margin-bottom: -100px; */
 }
 
 .about-title {
-  font-size: 36px;
-  font-weight: bold;
+  font-size: 40px;
+  font-weight: 600;
   margin-bottom: 2.5rem;
-  color: #ffffff;
+  color: #000000;
 }
 
 .cards-container {
@@ -17,37 +28,44 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
-  max-width: 1300px;
+  max-width: 1900px;
   margin: 0 auto;
 }
 
 .member-card {
   position: relative;
   overflow: hidden;
-  width: 350px;
-  height: 500px;
-  background-color: #4d4a4a;
+  width: calc((100% - 4 * 2rem) / 5); /* 5 card mỗi hàng */
+  height: 490px;
+  background-color: #9c9696;
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  animation: slideUp 0.6s ease-out both;
-  transition: transform 0.3s ease;
+  transition: all 0.9s ease-out;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  opacity: 0;
+  transform: translateY(60px);
+
 }
 
-.member-image {
-  width: 100%;
-  height: 320px; /* Điều chỉnh lại chiều cao */
-  object-fit: cover;
-  display: block;
-  border-radius: 8px;
-  margin: 0; /* Đảm bảo không có margin */
+.member-card.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .member-card:hover {
   transform: translateY(-8px);
+}
+
+.member-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+  margin: 0;
 }
 
 .member-name {
@@ -55,20 +73,20 @@
   font-weight: 600;
   color: #fff;
   text-align: left;
-  margin-top: 5px; /* Giảm margin-top */
+  margin-top: 5px;
 }
 
 .unit {
   font-size: 14px;
   color: #ccc;
-  margin-top: 5px; /* Giảm margin-top */
+  margin-top: 5px;
 }
 
 .member-role {
   font-size: 18px;
   color: #ff0000;
   font-weight: 700;
-  margin-top: 5px; /* Giảm margin-top */
+  margin-top: 5px;
   text-align: left;
 }
 
@@ -76,9 +94,9 @@
   font-size: 16px;
   font-style: italic;
   color: #eee;
-  margin-top: 5px; /* Giảm margin-top */
+  margin-top: 5px;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Giới hạn 3 dòng */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -88,7 +106,7 @@
 
 .member-card:hover .member-personality {
   display: block;
-  -webkit-line-clamp: unset; /* Hiển thị tất cả khi hover */
+  -webkit-line-clamp: unset;
 }
 
 @keyframes slideUp {
@@ -146,4 +164,113 @@
 
 .overlay-button:hover {
   background-color: #ff0000;
+}
+
+/* RESPONSIVE FOR IPAD */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .about-container {
+    max-width: 90%;
+    margin-top: -10px;
+    padding: 1.5rem;
+  }
+
+  .about-title {
+    font-size: 32px;
+  }
+
+  .cards-container {
+    gap: 1.5rem;
+  }
+
+  .member-card {
+    width: 45%;
+    max-height: 470px;
+    padding: 1rem;
+  }
+
+  .member-image {
+    height: 220px;
+  }
+
+  .member-name {
+    font-size: 20px;
+  }
+
+  .unit {
+    font-size: 13px;
+  }
+
+  .member-role {
+    font-size: 17px;
+  }
+
+  .member-personality {
+    font-size: 14px;
+  }
+
+  .overlay-personality {
+    font-size: 16px;
+  }
+
+  .overlay-button {
+    font-size: 15px;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+/* RESPONSIVE FOR MOBILE */
+@media screen and (max-width: 768px) {
+  .about-container {
+    width: 100%;
+    max-width: 330px;
+    border-radius: 20px;
+    margin-top: 30px;
+    padding: 1rem;
+  }
+
+  .about-title {
+    font-size: 28px;
+  }
+
+  .cards-container {
+    gap: 1rem;
+  }
+
+  .member-card {
+    width: 100%;
+    height: auto;
+    max-height: 450px;
+    padding: 0.8rem;
+  }
+
+  .member-image {
+    height: auto;
+    max-height: 200px;
+  }
+
+  .member-name {
+    font-size: 18px;
+  }
+
+  .member-role {
+    font-size: 16px;
+    margin-top: -15px;
+  }
+
+  .unit {
+    font-size: 12px;
+  }
+
+  .member-personality {
+    font-size: 12px;
+  }
+
+  .overlay-personality {
+    font-size: 16px;
+  }
+
+  .overlay-button {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+  }
 }

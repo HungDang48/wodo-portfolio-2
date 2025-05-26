@@ -1,0 +1,271 @@
+/* Section background and padding */
+.gallery-section {
+    background-color: #c3defe;
+    position: relative;
+    overflow: hidden;
+    padding: 2.5rem 0 6rem;
+  
+    display: flex;
+    justify-content: center; /* căn giữa ngang */
+    
+    
+    box-sizing: border-box;
+    margin-top: 20px;
+  }
+  
+  
+  .card-carousel-container {
+    position: relative;
+    width: fit-content;
+    max-width: 1650px;
+    margin: 0; /* Bỏ margin auto để sát lại */
+    overflow: hidden;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; /* khoảng cách giữa carousel và nút mũi tên */
+  }
+  
+  .card-carousel {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    width: 750px; /* 2 card x 350px + 2rem gap */
+  }
+  
+  .card {
+    min-width: 350px;
+    max-width: 350px;
+    flex-shrink: 0;
+    background: #f5f5f5;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Mũi tên trái/phải */
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #000;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    transition: background 0.3s, transform 0.3s;
+  }
+  
+  .arrow:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  /* Responsive max-width (for sm, md, lg) */
+  @media (min-width: 640px) {
+    .main-image {
+      max-width: 400px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  /* Content wrapper flexbox */
+  .content-wrapper {
+    max-width: 112rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+   
+    margin-top: 20px;
+  
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Giảm khoảng cách giữa text và carousel */
+  
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: flex-start; /* Căn trái để sát lại */
+      align-items: flex-start;
+      gap: 0.5rem; /* Khoảng cách nhỏ hơn */
+    }
+  }
+  
+  /* Text content column */
+  .text-content {
+    width: auto;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  
+    margin-top: 20px;
+  
+    @media (min-width: 768px) {
+      text-align: left;
+      margin: 0;
+      margin-top: 80px; /* đẩy xuống 8px */
+      /* Hoặc dùng transform: */
+      /* transform: translateY(8px); */
+    }
+  }
+  
+  
+  /* Badge */
+  .badge {
+    display: inline-block;
+    background-color: #0084ff;
+    color: white;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 12px;
+    padding: 5px 8px;
+    border-radius: 2px;
+    margin-bottom: 0.75rem;
+    width: 355px;
+    height: 20px;
+  }
+  
+  /* Heading */
+  .heading {
+    color: #1e3a8a;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 0.75rem;
+  }
+  
+  @media (min-width: 640px) {
+    .heading {
+      font-size: 22px;
+      line-height: 30px;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .heading {
+      font-size: 24px;
+      line-height: 32px;
+    }
+  }
+  
+  /* Description paragraph */
+  .description {
+    font-size: 12px;
+    line-height: 18px;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    max-width: 320px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .description {
+      font-size: 14px;
+      line-height: 22px;
+      max-width: none;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  /* Button */
+  .join-button {
+    background-color: #0084ff;
+    color: white;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 14px;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    max-width: 320px;
+    margin-left: 0;
+    margin-right: 0;
+    cursor: pointer;
+    border: none;
+  }
+  
+  @media (min-width: 768px) {
+    .join-button {
+      width: 680px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  /* Cards container */
+  .card {
+    width: 320px;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* Card images */
+  .card img {
+    width: 100%;
+    object-fit: cover;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+  }
+  
+  /* Card content box */
+  .card-content {
+    padding: 2rem 1.5rem 1.5rem;
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+  }
+  
+  /* Card 1 specific */
+  .card-content-1 {
+    background-color: #f15a5a;
+  }
+  
+  /* Card 2 specific */
+  .card-content-2 {
+    background-color: #f0ad2e;
+  }
+  
+  /* Card heading */
+  .card-content h3 {
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  
+  /* Card paragraph */
+  .card-content p {
+    font-size: 11px;
+    line-height: 14px;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Custom wave shape for bottom edges of card images */
+  .card-1 > img,
+  .card-2 > img {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 40px),
+      50% 100%,
+      0 calc(100% - 40px)
+    );
+  }
+  

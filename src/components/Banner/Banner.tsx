@@ -16,6 +16,22 @@ const Banner = () => {
         className={`banner-image ${isLoaded ? 'loaded' : ''}`} 
         onLoad={handleImageLoad} // Khi ảnh được load xong, gọi hàm handleImageLoad
       />
+     
+<div className="moving-text-container">
+  <span className="center-moving-text">𝓦𝓞𝓓𝓞</span>
+  <span className="center-moving-text">𝓦𝓞𝓓𝓞</span>
+  <span className="center-moving-text">𝓦𝓞𝓓𝓞</span>
+  <span className="center-moving-text">𝓦𝓞𝓓𝓞</span>
+  <span className="center-moving-text">𝓦𝓞𝓓𝓞</span>
+  {/* <img 
+  src="/img/WODO.png" 
+  alt="Moving Center Logo"
+  className="center-moving-logo"
+/> */}
+</div>
+
+
+ 
 
       {/* Logo bên trái + text */}
       <div className="left-logo-group">

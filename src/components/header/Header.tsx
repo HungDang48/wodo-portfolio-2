@@ -52,7 +52,7 @@ const Header: React.FC = () => {
           <Link to="/">
             <i className="fa fa-project-diagram"></i> Dự án
           </Link>
-          <Link to="/">
+          <Link to="/DonatePage">
             <i className="fa fa-donate"></i> Donate
           </Link>
           <Link to="/">

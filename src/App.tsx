@@ -10,6 +10,7 @@ import ProfileAdmin from './admin/page/InfoAdmin/ProfileAdmin';
 import ProjectAdmin from './admin/page/projectAdmin/ProjectAdmin';
 import MoreAbout from './pages/MoreAbout/MoreAbout';
 import BlogAdmin from './admin/page/BlogAdmin/BlogAdmin';
+import DonatePage from './pages/Donate/DonatePage';
  
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/AboutUs" element={<Layout><AboutUs /></Layout>} />
+        <Route path="/DonatePage" element={<Layout><DonatePage /></Layout>} />
          
         <Route path="/MoreAbout/:id" element={<Layout><MoreAbout /></Layout>} />
 
