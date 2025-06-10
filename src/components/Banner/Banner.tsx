@@ -49,6 +49,7 @@ const Banner = () => {
         <img src="/img/gialong.png" alt="Logo 2" className="logo" />
         <img src="/img/vungtau.png" alt="Logo 3" className="logo" />
         <img src="/img/rakhoi.png" alt="Logo 4" className="logo" />
+        <img src="/img/taophung.png" alt="Logo 4" className="logo" />
       </div>
     </div>
   );

@@ -52,6 +52,9 @@
 .overlay-logos .logo:nth-child(4) {
   animation-delay: 1.2s;
 }
+.overlay-logos .logo:nth-child(5) {
+  animation-delay: 1.5s;
+}
 @keyframes popup {
   0% {
     opacity: 0;
