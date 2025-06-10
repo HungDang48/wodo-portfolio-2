@@ -53,7 +53,7 @@ const AboutUs = () => {
   return (
     <div className="about-container">
       <div className="box">
-        <h1 className="about-title">THÀNH VIÊN TEAM WODO</h1>
+        <h1 className="about-title">THÀNH VIÊN TOÁN WODO</h1>
         <div className="cards-container">
           {members.map((member, index) => (
             <div
