@@ -173,7 +173,7 @@ const Header: React.FC = () => {
         <div className="left-group">
           <Link 
             to="/" 
-            className="logo" 
+            className="logo1" 
             aria-label="Trang chủ WODO - Vì một thế giới tốt đẹp hơn"
             onClick={() => {
               if (location.pathname !== '/') {

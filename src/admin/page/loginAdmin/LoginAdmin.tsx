@@ -26,7 +26,7 @@ const LoginAdmin = () => {
 
     try {
       // Gọi API để lấy danh sách admin
-      const response = await axios.get('https://wodo-portfolio-backend-production.up.railway.app/Admins');
+      const response = await axios.get('https://wodo-portfolio-backend.onrender.com/Admins');
       const admins = response.data;
 
       // Tìm admin có email và password khớp

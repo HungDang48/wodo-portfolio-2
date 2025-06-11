@@ -20,7 +20,7 @@ const AboutUs = () => {
 
   // Lấy dữ liệu từ API
   useEffect(() => {
-    fetch("https://wodo-portfolio-backend-production.up.railway.app/User")
+    fetch("https://wodo-portfolio-backend.onrender.com/User")
       .then(response => response.json())
       .then(data => setMembers(data))
       .catch(error => console.error("Error fetching data:", error));

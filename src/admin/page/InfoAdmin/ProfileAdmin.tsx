@@ -55,7 +55,7 @@ const ProfileAdmin = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get<User[]>('https://wodo-portfolio-backend-production.up.railway.app/User');
+      const response = await axios.get<User[]>('https://wodo-portfolio-backend.onrender.com/User');
       setUsers(response.data);
     } catch (error) {
       console.error('Lỗi khi fetch user:', error);
