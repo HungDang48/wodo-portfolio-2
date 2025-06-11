@@ -17,44 +17,54 @@ const images = [
 ];
 
 const ScoutPicture: React.FC = () => {
-  const [visibleItems, setVisibleItems] = useState<number[]>([]);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [startAnimation, setStartAnimation] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // Quan sát khi cuộn tới gần container thì bắt đầu animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute('data-index'));
-          if (entry.isIntersecting && !visibleItems.includes(index)) {
-            setVisibleItems(prev => [...prev, index]);
+          if (entry.isIntersecting) {
+            setStartAnimation(true);
           }
         });
       },
-      { threshold: 0.2 }
+      {
+        threshold: 0.2,
+      }
     );
 
-    itemRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     return () => {
-      itemRefs.current.forEach((el) => {
-        if (el) observer.unobserve(el);
-      });
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
     };
-  }, [visibleItems]);
+  }, []);
+
+  // Tăng ảnh hiển thị tuần tự khi animation bắt đầu
+  useEffect(() => {
+    if (startAnimation && visibleCount < images.length) {
+      const timer = setTimeout(() => {
+        setVisibleCount((prev) => prev + 1);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [startAnimation, visibleCount]);
 
   return (
-    <div className="scout-picture-wrapper">
+    <div className="scout-picture-wrapper" ref={containerRef}>
       <h2 className="gallery-title">HÌNH ẢNH SINH HOẠT TẠI MÁI ẤM</h2>
       <div className="gallery-container">
         {images.map((img, index) => (
           <div
             key={index}
-            data-index={index}
-            ref={(el) => { itemRefs.current[index] = el; }}
-            className={`gallery-item ${visibleItems.includes(index) ? 'visible' : ''}`}
-            style={{ animationDelay: `${index * 200}ms` }}
+            className={`gallery-item ${index < visibleCount ? 'visible' : ''}`}
           >
             <img src={img} alt={`scout-${index}`} />
             <div className="image-counter">

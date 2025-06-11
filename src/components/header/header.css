@@ -418,8 +418,21 @@
   }
 
 }
+.mobile-nav,
+.mobile-nav-overlay {
+  display: none;
+}
 
 @media (max-width: 768px) {
+  .mobile-nav,
+  .mobile-nav-overlay {
+    display: flex;
+  }
+
+  .mobile-nav {
+    flex-direction: column;
+  }
+ 
   .menu-toggle {
     display: block;
   }

@@ -2,24 +2,36 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './header.css';
 
+// Component Header chính
 const Header: React.FC = () => {
+  // Trạng thái cho menu di động (đang mở hay đóng)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Trạng thái cho hiệu ứng scrolled (có scroll xuống hay không)
   const [isScrolled, setIsScrolled] = useState(false);
+  // Trạng thái kiểm soát ẩn/hiện header khi scroll
   const [isVisible, setIsVisible] = useState(true);
+  // Lưu vị trí scroll trước đó
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  // Ref để tham chiếu đến menu di động
   const menuRef = useRef<HTMLDivElement>(null);
+  // Ref để tham chiếu đến phần header
   const headerRef = useRef<HTMLElement>(null);
+
+  // Hook để lấy thông tin route hiện tại
   const location = useLocation();
 
+  // Toggle mở/đóng menu
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev);
   }, []);
 
+  // Đóng menu
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
   }, []);
 
-  // Throttle function
+  // Hàm throttle để giới hạn tần suất thực hiện scroll handler
   const throttle = (func: Function, limit: number) => {
     let inThrottle: boolean = false;
     return function (this: any, ...args: any[]) {
@@ -31,25 +43,32 @@ const Header: React.FC = () => {
     };
   };
 
-  // Scroll effect: cập nhật isScrolled và isVisible dựa trên vị trí scroll
+  // Theo dõi scroll để thay đổi isScrolled, isVisible
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 10);
+      setIsScrolled(currentScrollY > 10); // Thêm class `scrolled` nếu scroll > 10px
+
+      // Nếu người dùng cuộn xuống và vượt qua 100px thì ẩn header
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
+
+      // Cập nhật vị trí scroll hiện tại
       setLastScrollY(currentScrollY);
     };
 
+    // Gắn hàm xử lý với throttle
     const throttledScroll = throttle(handleScroll, 10);
     window.addEventListener('scroll', throttledScroll, { passive: true });
+
+    // Dọn dẹp khi unmount
     return () => window.removeEventListener('scroll', throttledScroll);
   }, [lastScrollY]);
 
-  // Tự động đóng menu khi thay đổi route
+  // Tự động đóng menu khi route thay đổi
   useEffect(() => {
     if (isMenuOpen) {
       const timer = setTimeout(() => {
@@ -59,7 +78,7 @@ const Header: React.FC = () => {
     }
   }, [location, isMenuOpen]);
 
-  // Xử lý click bên ngoài (đóng menu) và áp dụng hiệu ứng blur cho thân trang khi mở menu
+  // Đóng menu nếu người dùng click bên ngoài menu hoặc header
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -74,8 +93,8 @@ const Header: React.FC = () => {
 
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'hidden';
-      document.body.style.filter = 'blur(1px)';
+      document.body.style.overflow = 'hidden'; // Ngăn cuộn khi menu mở
+      document.body.style.filter = 'blur(1px)'; // Hiệu ứng mờ nền
     } else {
       document.body.style.overflow = '';
       document.body.style.filter = '';
@@ -88,19 +107,23 @@ const Header: React.FC = () => {
     };
   }, [isMenuOpen]);
 
-  // Hỗ trợ điều hướng bằng bàn phím (Escape và Tab)
+  // Hỗ trợ điều hướng bằng phím Escape và Tab (accessibility)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
         setIsMenuOpen(false);
       }
+
+      // Xử lý vòng lặp focus trong menu
       if (event.key === 'Tab' && isMenuOpen) {
         const focusableElements = menuRef.current?.querySelectorAll(
           'a, button, [tabindex]:not([tabindex="-1"])'
         ) as NodeListOf<HTMLElement>;
+
         if (focusableElements.length > 0) {
           const firstElement = focusableElements[0];
           const lastElement = focusableElements[focusableElements.length - 1];
+
           if (event.shiftKey && document.activeElement === firstElement) {
             event.preventDefault();
             lastElement.focus();
@@ -116,7 +139,7 @@ const Header: React.FC = () => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMenuOpen]);
 
-  // Khi mở menu bắt đầu focus phần tử đầu tiên
+  // Khi mở menu, tự động focus phần tử đầu tiên
   useEffect(() => {
     if (isMenuOpen) {
       const firstFocusableElement = menuRef.current?.querySelector('a, button') as HTMLElement;
@@ -124,38 +147,18 @@ const Header: React.FC = () => {
     }
   }, [isMenuOpen]);
 
-  // Định nghĩa navigation items với đường dẫn nhất quán theo App.tsx
+  // Danh sách điều hướng
   const navItems = [
-    { 
-      to: '/AboutUs', 
-      icon: 'fa-info-circle', 
-      label: 'Về chúng tôi',
-      description: 'Tìm hiểu về WODO'
-    },
-    { 
-      to: '/Projects', 
-      icon: 'fa-project-diagram', 
-      label: 'Dự án',
-      description: 'Các dự án của chúng tôi'
-    },
-    { 
-      to: '/DonatePage', 
-      icon: 'fa-donate', 
-      label: 'Donate',
-      description: 'Ủng hộ chúng tôi'
-    },
-    { 
-      to: '/Contact', 
-      icon: 'fa-phone', 
-      label: 'Liên hệ',
-      description: 'Kết nối với chúng tôi'
-    },
+    { to: '/AboutUs', icon: 'fa-info-circle', label: 'Về chúng tôi', description: 'Tìm hiểu về WODO' },
+    { to: '/Projects', icon: 'fa-project-diagram', label: 'Dự án', description: 'Các dự án của chúng tôi' },
+    { to: '/DonatePage', icon: 'fa-donate', label: 'Donate', description: 'Ủng hộ chúng tôi' },
+    { to: '/Contact', icon: 'fa-phone', label: 'Liên hệ', description: 'Kết nối với chúng tôi' },
   ];
 
-  // Hàm xử lý khi click nút “Vì một thế giới tốt đẹp hơn”
+  // Nút “Vì một thế giới tốt đẹp hơn” scroll đến phần tử #hero-section
   const handleWorldButtonClick = () => {
     if ('vibrate' in navigator) {
-      navigator.vibrate(50);
+      navigator.vibrate(50); // Rung nhẹ trên thiết bị hỗ trợ
     }
     const targetSection = document.getElementById('hero-section');
     if (targetSection) {
@@ -170,6 +173,7 @@ const Header: React.FC = () => {
       role="banner"
     >
       <div className="header-user-container">
+        {/* Logo và nút menu */}
         <div className="left-group">
           <Link 
             to="/" 
@@ -186,7 +190,7 @@ const Header: React.FC = () => {
           >
             <span>WODO</span>
           </Link>
-          
+
           <button 
             className="menu-toggle"
             onClick={toggleMenu}
@@ -203,6 +207,7 @@ const Header: React.FC = () => {
           </button>
         </div>
 
+        {/* Navigation trên desktop */}
         <nav className="nav" role="navigation" aria-label="Menu chính">
           {navItems.map((item, index) => (
             <Link
@@ -219,6 +224,7 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
+        {/* Nút chính kêu gọi hành động */}
         <button 
           className="world-button" 
           type="button"
@@ -230,14 +236,15 @@ const Header: React.FC = () => {
         </button>
       </div>
 
-      {/* Enhanced Mobile Navigation Overlay */}
+      {/* Lớp phủ mờ khi mở menu trên mobile */}
       <div 
         className={`mobile-nav-overlay ${isMenuOpen ? 'active' : ''}`}
         onClick={closeMenu}
         aria-hidden={!isMenuOpen}
         role="presentation"
       />
-      
+
+      {/* Menu di động */}
       <nav
         ref={menuRef}
         id="mobile-nav"
@@ -257,7 +264,7 @@ const Header: React.FC = () => {
             <i className="fa fa-times" aria-hidden="true"></i>
           </button>
         </div>
-        
+
         <div className="mobile-nav-content">
           {navItems.map((item, index) => (
             <Link
@@ -276,7 +283,8 @@ const Header: React.FC = () => {
               </div>
             </Link>
           ))}
-          
+
+          {/* Footer của mobile menu */}
           <div className="mobile-nav-footer">
             <button 
               className="mobile-world-button"
