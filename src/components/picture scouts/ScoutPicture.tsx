@@ -19,9 +19,10 @@ const images = [
 const ScoutPicture: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(0);
   const [startAnimation, setStartAnimation] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Quan sát khi cuộn tới gần container thì bắt đầu animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,9 +32,7 @@ const ScoutPicture: React.FC = () => {
           }
         });
       },
-      {
-        threshold: 0.2,
-      }
+      { threshold: 0.2 }
     );
 
     if (containerRef.current) {
@@ -47,15 +46,57 @@ const ScoutPicture: React.FC = () => {
     };
   }, []);
 
-  // Tăng ảnh hiển thị tuần tự khi animation bắt đầu
   useEffect(() => {
     if (startAnimation && visibleCount < images.length) {
       const timer = setTimeout(() => {
         setVisibleCount((prev) => prev + 1);
-      }, 300);
+      }, 200);
       return () => clearTimeout(timer);
     }
   }, [startAnimation, visibleCount]);
+
+  const openLightbox = (index: number) => {
+    setCurrentIndex(index);
+    setLightboxOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    document.body.style.overflow = 'auto'; // Re-enable scrolling
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      
+      switch (e.key) {
+        case 'ArrowLeft':
+          setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+          break;
+        case 'ArrowRight':
+          setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+          break;
+        case 'Escape':
+          closeLightbox();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen]);
 
   return (
     <div className="scout-picture-wrapper" ref={containerRef}>
@@ -65,14 +106,33 @@ const ScoutPicture: React.FC = () => {
           <div
             key={index}
             className={`gallery-item ${index < visibleCount ? 'visible' : ''}`}
+            onClick={() => openLightbox(index)}
           >
-            <img src={img} alt={`scout-${index}`} />
+            <img
+              src={img}
+              alt={`scout-${index}`}
+              style={{ cursor: 'pointer' }}
+            />
             <div className="image-counter">
               {index + 1} / {images.length}
             </div>
           </div>
         ))}
       </div>
+
+      {lightboxOpen && (
+        <div className="lightbox-overlay" onClick={closeLightbox}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeLightbox}>×</button>
+            <button className="nav-btn left" onClick={prevImage}>‹</button>
+            <img src={images[currentIndex]} alt={`scout-${currentIndex}`} />
+            <button className="nav-btn right" onClick={nextImage}>›</button>
+            <div className="counter">
+              {currentIndex + 1} / {images.length}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
