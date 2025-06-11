@@ -97,7 +97,7 @@ const Header: React.FC = () => {
       document.body.style.filter = 'blur(1px)'; // Hiệu ứng mờ nền
     } else {
       document.body.style.overflow = '';
-      document.body.style.filter = '';
+      document.body.style.filter = '' ;
     }
 
     return () => {
