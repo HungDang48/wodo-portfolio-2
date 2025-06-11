@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './ScoutPicture.css';
 
+ 
+
 const images = [
-  "/img/scout1.png",
-  "/img/scout2.png",
-  "/img/scout3.png",
-  "/img/scout4.png",
-  "/img/scout5.png",
-  "/img/scout6.png",
-  "/img/scout7.png",
-  "/img/scout9.png",
-  "/img/scout10.png",
-  "/img/scout11.png",
-  "/img/scout12.png",
-  "/img/scout13.png",
+  process.env.PUBLIC_URL + "/img/scout1.png",
+  process.env.PUBLIC_URL + "/img/scout2.png",
+  process.env.PUBLIC_URL + "/img/scout3.png",
+  process.env.PUBLIC_URL + "/img/scout4.png",
+  process.env.PUBLIC_URL + "/img/scout5.png",
+  process.env.PUBLIC_URL + "/img/scout6.png",
+  process.env.PUBLIC_URL + "/img/scout7.png",
+  process.env.PUBLIC_URL + "/img/scout9.png",
+  process.env.PUBLIC_URL + "/img/scout10.png",
+  process.env.PUBLIC_URL + "/img/scout11.png",
+  process.env.PUBLIC_URL + "/img/scout12.png",
+  process.env.PUBLIC_URL + "/img/scout13.png",
 ];
+
 
 const ScoutPicture: React.FC = () => {
   const [visibleCount, setVisibleCount] = useState(0);
@@ -58,12 +61,12 @@ const ScoutPicture: React.FC = () => {
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+    document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-    document.body.style.overflow = 'auto'; // Re-enable scrolling
+    document.body.style.overflow = 'auto';
   };
 
   const prevImage = (e: React.MouseEvent) => {
@@ -76,11 +79,10 @@ const ScoutPicture: React.FC = () => {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!lightboxOpen) return;
-      
+
       switch (e.key) {
         case 'ArrowLeft':
           setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
