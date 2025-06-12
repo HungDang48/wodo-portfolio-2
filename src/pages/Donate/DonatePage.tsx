@@ -12,22 +12,25 @@ const DonatePage: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleDonate = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/momo-payment", {
+      const res = await fetch("https://wodo-thanks-letter.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-      if (data.payUrl) {
-        window.location.href = data.payUrl; // Chuyển hướng sang trang thanh toán Momo
+      if (res.ok) {
+        alert("✅ Cảm ơn bạn đã ủng hộ! vui lòng check mail để xác nhận");
+        setFormData({ name: "", email: "", amount: "" }); // Reset form
+      } else {
+        alert("❌ Gửi thư thất bại. Vui lòng thử lại.");
       }
     } catch (err) {
-      alert("Lỗi kết nối server.");
+      alert("❌ Lỗi kết nối đến server.");
+      console.error(err);
     }
   };
 
@@ -40,25 +43,51 @@ const DonatePage: React.FC = () => {
       minHeight: "100vh",
     }}>
       <div className="donate-overlay">
-        <h1 className="donate-title">Ủng hộ tác giả 💖</h1>
+        <h1 className="donate-title">Ủng hộ toán tụi mình 💖</h1>
 
-        <form className="donate-form" onSubmit={handleSubmit}>
+        <form className="donate-form" onSubmit={handleDonate}>
           <label className="donate-label">
             Tên của bạn:
-            <input name="name" value={formData.name} onChange={handleChange} type="text" placeholder="Nhập tên của bạn" className="donate-input" />
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              type="text"
+              placeholder="Nhập tên của bạn"
+              className="donate-input"
+              required
+            />
           </label>
 
           <label className="donate-label">
             Gmail:
-            <input name="email" value={formData.email} onChange={handleChange} type="email" placeholder="Nhập email của bạn" className="donate-input" />
+            <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              type="email"
+              placeholder="Nhập email của bạn"
+              className="donate-input"
+              required
+            />
           </label>
 
           <label className="donate-label">
             Số tiền donate (VNĐ):
-            <input name="amount" value={formData.amount} onChange={handleChange} type="number" placeholder="Ví dụ: 50000" className="donate-input" />
+            <input
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              type="number"
+              placeholder="Ví dụ: 50000"
+              className="donate-input"
+              required
+            />
           </label>
 
-          <button type="submit" className="donate-button">Gửi donate</button>
+          <button type="submit" className="donate-button">
+            Gửi donate
+          </button>
         </form>
       </div>
     </div>
