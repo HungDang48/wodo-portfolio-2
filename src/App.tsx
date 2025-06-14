@@ -11,7 +11,7 @@ import ProjectAdmin from './admin/page/projectAdmin/ProjectAdmin';
 import MoreAbout from './pages/MoreAbout/MoreAbout';
 import BlogAdmin from './admin/page/BlogAdmin/BlogAdmin';
 import DonatePage from './pages/Donate/DonatePage';
- 
+import ProjectPage from './pages/Project/ProjectPage';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<Layout><Home /></Layout>} />
         <Route path="/AboutUs" element={<Layout><AboutUs /></Layout>} />
         <Route path="/DonatePage" element={<Layout><DonatePage /></Layout>} />
-         
+        <Route path="/Projects" element={<Layout><ProjectPage /></Layout>} />
         <Route path="/MoreAbout/:id" element={<Layout><MoreAbout /></Layout>} />
 
         <Route path="/ProfileAdmin" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />

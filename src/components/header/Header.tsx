@@ -12,23 +12,61 @@ const Header: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   // Lưu vị trí scroll trước đó
   const [lastScrollY, setLastScrollY] = useState(0);
+  // Trạng thái loading cho transitions
+  const [isLoading, setIsLoading] = useState(false);
 
   // Ref để tham chiếu đến menu di động
   const menuRef = useRef<HTMLDivElement>(null);
   // Ref để tham chiếu đến phần header
   const headerRef = useRef<HTMLElement>(null);
+  // Ref cho overlay
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   // Hook để lấy thông tin route hiện tại
   const location = useLocation();
 
-  // Toggle mở/đóng menu
+  // Toggle mở/đóng menu với hiệu ứng mượt mà
   const toggleMenu = useCallback(() => {
-    setIsMenuOpen((prev) => !prev);
+    setIsMenuOpen((prev) => {
+      const newState = !prev;
+      
+      // Thêm hiệu ứng rung nhẹ nếu hỗ trợ
+      if ('vibrate' in navigator) {
+        navigator.vibrate(30);
+      }
+      
+      // Xử lý body scroll và focus management
+      if (newState) {
+        document.body.style.overflow = 'hidden';
+        // Focus vào menu sau khi mở
+        setTimeout(() => {
+          const firstFocusableElement = menuRef.current?.querySelector('button, a') as HTMLElement;
+          firstFocusableElement?.focus();
+        }, 100);
+      } else {
+        document.body.style.overflow = '';
+        // Focus trở lại nút menu
+        setTimeout(() => {
+          const menuToggle = document.querySelector('.menu-toggle') as HTMLElement;
+          menuToggle?.focus();
+        }, 100);
+      }
+      
+      return newState;
+    });
   }, []);
 
   // Đóng menu
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
+    document.body.style.overflow = '';
+    document.body.style.filter = '';
+    
+    // Focus trở lại nút menu khi đóng
+    setTimeout(() => {
+      const menuToggle = document.querySelector('.menu-toggle') as HTMLElement;
+      menuToggle?.focus();
+    }, 100);
   }, []);
 
   // Hàm throttle để giới hạn tần suất thực hiện scroll handler
@@ -49,11 +87,13 @@ const Header: React.FC = () => {
       const currentScrollY = window.scrollY;
       setIsScrolled(currentScrollY > 10); // Thêm class `scrolled` nếu scroll > 10px
 
-      // Nếu người dùng cuộn xuống và vượt qua 100px thì ẩn header
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
+      // Nếu người dùng cuộn xuống và vượt qua 100px thì ẩn header (trừ khi menu đang mở)
+      if (!isMenuOpen) {
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
       }
 
       // Cập nhật vị trí scroll hiện tại
@@ -66,58 +106,73 @@ const Header: React.FC = () => {
 
     // Dọn dẹp khi unmount
     return () => window.removeEventListener('scroll', throttledScroll);
-  }, [lastScrollY]);
+  }, [lastScrollY, isMenuOpen]);
 
   // Tự động đóng menu khi route thay đổi
   useEffect(() => {
     if (isMenuOpen) {
+      setIsLoading(true);
       const timer = setTimeout(() => {
         setIsMenuOpen(false);
+        setIsLoading(false);
+        document.body.style.overflow = '';
+        document.body.style.filter = '';
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [location, isMenuOpen]);
+  }, [location]);
 
-  // Đóng menu nếu người dùng click bên ngoài menu hoặc header
+  // Xử lý click outside để đóng menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      
+      // Kiểm tra nếu click vào overlay thì đóng menu
+      if (overlayRef.current && overlayRef.current.contains(target)) {
+        closeMenu();
+        return;
+      }
+      
+      // Kiểm tra nếu click bên ngoài menu và header
       if (
+        isMenuOpen &&
         menuRef.current &&
-        !menuRef.current.contains(event.target as Node) &&
-        !headerRef.current?.contains(event.target as Node) &&
-        isMenuOpen
+        !menuRef.current.contains(target) &&
+        headerRef.current &&
+        !headerRef.current.contains(target)
       ) {
-        setIsMenuOpen(false);
+        closeMenu();
       }
     };
 
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'hidden'; // Ngăn cuộn khi menu mở
-      document.body.style.filter = 'blur(1px)'; // Hiệu ứng mờ nền
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.filter = '' ;
+      document.body.style.overflow = 'hidden';
+      document.body.style.filter = ' ';
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = '';
-      document.body.style.filter = '';
+      if (!isMenuOpen) {
+        document.body.style.overflow = '';
+        document.body.style.filter = '';
+      }
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, closeMenu]);
 
-  // Hỗ trợ điều hướng bằng phím Escape và Tab (accessibility)
+  // Hỗ trợ điều hướng bằng phím (accessibility)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false);
+        event.preventDefault();
+        closeMenu();
+        return;
       }
 
-      // Xử lý vòng lặp focus trong menu
-      if (event.key === 'Tab' && isMenuOpen) {
-        const focusableElements = menuRef.current?.querySelectorAll(
-          'a, button, [tabindex]:not([tabindex="-1"])'
+      // Xử lý vòng lặp focus trong menu khi nhấn Tab
+      if (event.key === 'Tab' && isMenuOpen && menuRef.current) {
+        const focusableElements = menuRef.current.querySelectorAll(
+          'a:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
         ) as NodeListOf<HTMLElement>;
 
         if (focusableElements.length > 0) {
@@ -137,111 +192,178 @@ const Header: React.FC = () => {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, closeMenu]);
 
-  // Khi mở menu, tự động focus phần tử đầu tiên
-  useEffect(() => {
-    if (isMenuOpen) {
-      const firstFocusableElement = menuRef.current?.querySelector('a, button') as HTMLElement;
-      firstFocusableElement?.focus();
-    }
-  }, [isMenuOpen]);
-
-  // Danh sách điều hướng
+  // Danh sách điều hướng với enhanced descriptions
   const navItems = [
-    { to: '/AboutUs', icon: 'fa-info-circle', label: 'Về chúng tôi', description: 'Tìm hiểu về WODO' },
-    { to: '/Projects', icon: 'fa-project-diagram', label: 'Dự án', description: 'Các dự án của chúng tôi' },
-    { to: '/DonatePage', icon: 'fa-donate', label: 'Donate', description: 'Ủng hộ chúng tôi' },
-    { to: '/Contact', icon: 'fa-phone', label: 'Liên hệ', description: 'Kết nối với chúng tôi' },
+    { 
+      to: '/AboutUs', 
+      icon: 'fa-info-circle', 
+      label: 'Về chúng tôi', 
+      description: 'Câu chuyện và sứ mệnh của WODO' 
+    },
+    { 
+      to: '/Projects', 
+      icon: 'fa-project-diagram', 
+      label: 'Dự án', 
+      description: 'Những dự án tạo tác động tích cực' 
+    },
+    { 
+      to: '/DonatePage', 
+      icon: 'fa-heart', 
+      label: 'Donate', 
+      description: 'Đồng hành cùng chúng tôi' 
+    },
+    { 
+      to: '/Contact', 
+      icon: 'fa-paper-plane', 
+      label: 'Liên hệ', 
+      description: 'Kết nối và hợp tác' 
+    },
   ];
 
-  // Nút “Vì một thế giới tốt đẹp hơn” scroll đến phần tử #hero-section
+  // Nút "Vì một thế giới tốt đẹp hơn" với enhanced UX
   const handleWorldButtonClick = () => {
+    // Haptic feedback
     if ('vibrate' in navigator) {
-      navigator.vibrate(50); // Rung nhẹ trên thiết bị hỗ trợ
+      navigator.vibrate([50, 30, 50]);
     }
+    
+    // Smooth scroll với enhanced behavior
     const targetSection = document.getElementById('hero-section');
     if (targetSection) {
-      targetSection.scrollIntoView({ behavior: 'smooth' });
+      // Thêm hiệu ứng loading tạm thời
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 800);
+      
+      targetSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
+  };
+
+  // Enhanced navigation click handler
+  const handleNavClick = (to: string) => {
+    // Haptic feedback
+    if ('vibrate' in navigator) {
+      navigator.vibrate(25);
+    }
+    
+    // Visual feedback cho page transitions
+    if (location.pathname !== to) {
+      setIsLoading(true);
+      document.body.style.opacity = '0.95';
+      setTimeout(() => {
+        document.body.style.opacity = '1';
+        setIsLoading(false);
+      }, 300);
     }
   };
 
   return (
-    <header 
-      ref={headerRef}
-      className={`header-user ${isScrolled ? 'scrolled' : ''} ${isVisible ? '' : 'hidden'}`}
-      role="banner"
-    >
-      <div className="header-user-container">
-        {/* Logo và nút menu */}
-        <div className="left-group">
-          <Link 
-            to="/" 
-            className="logo1" 
-            aria-label="Trang chủ WODO - Vì một thế giới tốt đẹp hơn"
-            onClick={() => {
-              if (location.pathname !== '/') {
-                document.body.style.opacity = '0.8';
-                setTimeout(() => {
-                  document.body.style.opacity = '1';
-                }, 200);
-              }
-            }}
-          >
-            <span>WODO</span>
-          </Link>
+    <>
+      <header 
+        ref={headerRef}
+        className={`header-user ${isScrolled ? 'scrolled' : ''} ${isVisible ? '' : 'hidden'} ${isLoading ? 'loading' : ''}`}
+        role="banner"
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 1001,
+        }}
+      >
+        <div className="header-user-container">
+          {/* Logo và nút menu */}
+          <div className="left-group">
+            <Link 
+              to="/" 
+              className="logo1" 
+              aria-label="Trang chủ WODO - Vì một thế giới tốt đẹp hơn"
+              onClick={() => handleNavClick('/')}
+            >
+              <span>WODO</span>
+            </Link>
 
+            <button 
+              className="menu-toggle"
+              onClick={toggleMenu}
+              aria-label={isMenuOpen ? 'Đóng menu di động' : 'Mở menu di động'}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav"
+              aria-haspopup="true"
+              style={{ zIndex: 1004 }}
+            >
+              <span className={`hamburger ${isMenuOpen ? 'active' : ''}`} aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          </div>
+
+          {/* Navigation trên desktop */}
+          <nav className="nav" role="navigation" aria-label="Menu chính">
+            {navItems.map((item, index) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={location.pathname === item.to ? 'active' : ''}
+                aria-current={location.pathname === item.to ? 'page' : undefined}
+                title={item.description}
+                onClick={() => handleNavClick(item.to)}
+                style={{ 
+                  animationDelay: `${index * 0.1}s`,
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }}
+              >
+                <i className={`fa ${item.icon}`} aria-hidden="true"></i>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Nút chính kêu gọi hành động */}
           <button 
-            className="menu-toggle"
-            onClick={toggleMenu}
-            aria-label={isMenuOpen ? 'Đóng menu di động' : 'Mở menu di động'}
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-nav"
-            aria-haspopup="true"
+            className="world-button" 
+            type="button"
+            onClick={handleWorldButtonClick}
+            aria-label="Vì một thế giới tốt đẹp hơn - Tìm hiểu thêm về sứ mệnh của chúng tôi"
+            title="Khám phá sứ mệnh của WODO"
+            disabled={isLoading}
           >
-            <span className={`hamburger ${isMenuOpen ? 'active' : ''}`}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </span>
+            {isLoading ? (
+              <>
+                <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                <span>Đang tải...</span>
+              </>
+            ) : (
+              <span>Vì một thế giới tốt đẹp hơn</span>
+            )}
           </button>
         </div>
-
-        {/* Navigation trên desktop */}
-        <nav className="nav" role="navigation" aria-label="Menu chính">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={location.pathname === item.to ? 'active' : ''}
-              aria-current={location.pathname === item.to ? 'page' : undefined}
-              title={item.description}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <i className={`fa ${item.icon}`} aria-hidden="true"></i>
-              <span>{item.label}</span>
-            </Link>
-          ))}
-        </nav>
-
-        {/* Nút chính kêu gọi hành động */}
-        <button 
-          className="world-button" 
-          type="button"
-          onClick={handleWorldButtonClick}
-          aria-label="Vì một thế giới tốt đẹp hơn - Tìm hiểu thêm về sứ mệnh của chúng tôi"
-          title="Khám phá sứ mệnh của WODO"
-        >
-          <span>Vì một thế giới tốt đẹp hơn</span>
-        </button>
-      </div>
+      </header>
 
       {/* Lớp phủ mờ khi mở menu trên mobile */}
       <div 
+        ref={overlayRef}
         className={`mobile-nav-overlay ${isMenuOpen ? 'active' : ''}`}
         onClick={closeMenu}
         aria-hidden={!isMenuOpen}
         role="presentation"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh',
+          zIndex: 998,
+          pointerEvents: isMenuOpen ? 'auto' : 'none',
+          opacity: isMenuOpen ? 1 : 0,
+          visibility: isMenuOpen ? 'visible' : 'hidden',
+          transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        }}
       />
 
       {/* Menu di động */}
@@ -252,17 +374,21 @@ const Header: React.FC = () => {
         role="navigation"
         aria-label="Menu di động"
         aria-hidden={!isMenuOpen}
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: isMenuOpen ? 0 : '-100%',
+          width: 'min(420px, 90vw)',
+          height: '100vh',
+          zIndex: 999,
+          display: 'flex',
+          flexDirection: 'column',
+          transition: 'right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          pointerEvents: isMenuOpen ? 'auto' : 'none'
+        }}
       >
         <div className="mobile-nav-header">
           <span className="mobile-nav-title">Menu</span>
-          <button
-            className="mobile-nav-close"
-            onClick={closeMenu}
-            aria-label="Đóng menu di động"
-            tabIndex={isMenuOpen ? 0 : -1}
-          >
-            <i className="fa fa-times" aria-hidden="true"></i>
-          </button>
         </div>
 
         <div className="mobile-nav-content">
@@ -270,11 +396,17 @@ const Header: React.FC = () => {
             <Link
               key={item.to}
               to={item.to}
-              onClick={closeMenu}
+              onClick={() => {
+                handleNavClick(item.to);
+                closeMenu();
+              }}
               className={location.pathname === item.to ? 'active' : ''}
               aria-current={location.pathname === item.to ? 'page' : undefined}
               tabIndex={isMenuOpen ? 0 : -1}
-              style={{ animationDelay: `${(index + 1) * 0.05}s` }}
+              style={{ 
+                animationDelay: `${(index + 1) * 0.05}s`,
+                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+              }}
             >
               <i className={`fa ${item.icon}`} aria-hidden="true"></i>
               <div>
@@ -283,24 +415,34 @@ const Header: React.FC = () => {
               </div>
             </Link>
           ))}
+        </div>
 
-          {/* Footer của mobile menu */}
-          <div className="mobile-nav-footer">
-            <button 
-              className="mobile-world-button"
-              onClick={() => {
-                closeMenu();
-                handleWorldButtonClick();
-              }}
-              tabIndex={isMenuOpen ? 0 : -1}
-            >
-              <i className="fa fa-globe" aria-hidden="true"></i>
-              <span>Vì một thế giới tốt đẹp hơn</span>
-            </button>
-          </div>
+        {/* Footer của mobile menu */}
+        <div className="mobile-nav-footer">
+          <button 
+            className="mobile-world-button"
+            onClick={() => {
+              closeMenu();
+              handleWorldButtonClick();
+            }}
+            tabIndex={isMenuOpen ? 0 : -1}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <i className="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                <span>Đang tải...</span>
+              </>
+            ) : (
+              <>
+                <i className="fa fa-globe" aria-hidden="true"></i>
+                <span>Vì một thế giới tốt đẹp hơn</span>
+              </>
+            )}
+          </button>
         </div>
       </nav>
-    </header>
+    </>
   );
 };
 
