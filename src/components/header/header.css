@@ -336,6 +336,7 @@
   flex: 1;
   padding: 1rem 0;
   overflow-y: auto;
+  z-index: 1500;
 }
 
 .mobile-nav-content a {
