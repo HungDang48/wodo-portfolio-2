@@ -74,7 +74,7 @@ const Benefit: React.FC = () => {
               <img
                 alt="Two boys walking in a field carrying rope and wearing scout uniforms"
                 height={300}
-                src="https://storage.googleapis.com/a1aa/image/1721c0db-4b9d-418a-226d-15952d39e2c1.jpg"
+                src="/img/benefit1.jpg"
                 width={400}
                 loading="lazy"
               />
@@ -93,7 +93,7 @@ const Benefit: React.FC = () => {
               <img
                 alt="Group of young people walking outdoors in scout uniforms"
                 height={300}
-                src="https://storage.googleapis.com/a1aa/image/e2d9815a-bd64-4cc0-40bb-167250ad5423.jpg"
+                src=" /img/benefit2.jpg"
                 width={400}
                 loading="lazy"
               />
