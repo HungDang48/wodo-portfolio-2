@@ -29,16 +29,16 @@ const DonatePage: React.FC = () => {
       showNotification('error', 'Vui lòng điền đầy đủ thông tin');
       return;
     }
-    
+  
     setIsSubmitting(true);
-
+  
     try {
-      const res = await fetch("https://huwgdang.app.n8n.cloud/webhook/test", {
+      const res = await fetch("https://huwgdang.app.n8n.cloud/webhook/692ab9e2-1d44-400b-aaee-6a08e5c83853", {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
-      });
-
+        });
       if (res.ok) {
         showNotification('success', "Cảm ơn bạn đã ủng hộ! Vui lòng check mail để xác nhận");
         setFormData({ name: "", email: "", amount: "" });
@@ -52,6 +52,7 @@ const DonatePage: React.FC = () => {
       setIsSubmitting(false);
     }
   };
+  
 
   const quickAmounts = [50000, 100000, 200000, 500000];
 
