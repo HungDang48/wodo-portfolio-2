@@ -14,6 +14,7 @@ const DonatePage: React.FC = () => {
     type: null,
     message: ""
   });
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,16 +30,29 @@ const DonatePage: React.FC = () => {
       showNotification('error', 'Vui lòng điền đầy đủ thông tin');
       return;
     }
+    if (Number(formData.amount) <= 0) {
+      showNotification('error', 'Số tiền phải lớn hơn 0');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailRegex.test(formData.email)) {
+  showNotification('error', 'Email không hợp lệ');
+  return;
+}
+
   
     setIsSubmitting(true);
   
     try {
-      const res = await fetch("https://huwgdang.app.n8n.cloud/webhook/692ab9e2-1d44-400b-aaee-6a08e5c83853", {
-
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-        });
+      const res = await fetch(
+        "https://huwgdang.app.n8n.cloud/webhook/692ab9e2-1d44-400b-aaee-6a08e5c83853",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...formData, type: "donate" }),
+        }
+      );
+      
       if (res.ok) {
         showNotification('success', "Cảm ơn bạn đã ủng hộ! Vui lòng check mail để xác nhận");
         setFormData({ name: "", email: "", amount: "" });
