@@ -49,9 +49,11 @@ if (!emailRegex.test(formData.email)) {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...formData, type: "donate" }),
+          body: JSON.stringify([{ ...formData, type: "donate" }])
         }
       );
+      console.log([{ ...formData, type: "donate" }]);
+
       
       if (res.ok) {
         showNotification('success', "Cảm ơn bạn đã ủng hộ! Vui lòng check mail để xác nhận");
