@@ -12,6 +12,7 @@ import MoreAbout from './pages/MoreAbout/MoreAbout';
 import BlogAdmin from './admin/page/BlogAdmin/BlogAdmin';
 import DonatePage from './pages/Donate/DonatePage';
 import ProjectPage from './pages/project/ProjectPage';
+import ProductPage from './pages/Products/ProductPage';
  
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
         <Route path="/AboutUs" element={<Layout><AboutUs /></Layout>} />
         <Route path="/DonatePage" element={<Layout><DonatePage /></Layout>} />
         <Route path="/ProjectPage" element={<Layout><ProjectPage /></Layout>} />
-         
+        <Route path="/Products" element={<Layout><ProductPage /></Layout>} />
         <Route path="/MoreAbout/:id" element={<Layout><MoreAbout /></Layout>} />
 
         <Route path="/ProfileAdmin" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />

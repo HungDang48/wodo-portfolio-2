@@ -204,13 +204,13 @@ const Header: React.FC = () => {
     },
     { 
       to: '/ProjectPage', 
-      icon: 'fa-project-diagram', 
+      icon: 'fa-newspaper-o', 
       label: 'Dự án', 
       description: 'Những dự án tạo tác động tích cực' 
     },
     { 
       to: '/DonatePage', 
-      icon: 'fa-heart', 
+      icon: 'fa-credit-card-alt', 
       label: 'Donate', 
       description: 'Đồng hành cùng chúng tôi' 
     },
@@ -219,6 +219,12 @@ const Header: React.FC = () => {
       icon: 'fa-paper-plane', 
       label: 'Liên hệ', 
       description: 'Kết nối và hợp tác' 
+    },
+    { 
+      to: '/Products', 
+      icon: 'fa-product-hunt', 
+      label: 'Sản phẩm', 
+      description: 'Khám phá các sản phẩm của chúng tôi' 
     },
   ];
 
