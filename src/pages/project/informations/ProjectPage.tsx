@@ -216,12 +216,12 @@ const ProjectPage: React.FC = () => {
         </div>
 
         {/* Footer */}
-        <div className="page-footer">
+        {/* <div className="page-footer">
           <div className="footer-badge">
             <div className="status-dot"></div>
             <span className="footer-text">Project Framework</span>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

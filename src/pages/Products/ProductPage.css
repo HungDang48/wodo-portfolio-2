@@ -399,8 +399,12 @@ body {
   transform: scale(1.1);
 }
 
-.modal-body {
-  padding: 2rem;
+.modal-body > div {
+  scroll-snap-type: x mandatory;
+}
+
+.modal-body > div img {
+  scroll-snap-align: center;
 }
 
 .modal-title {

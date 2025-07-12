@@ -75,7 +75,7 @@ const HomeInfo = () => {
                 className="logo-info" 
               />
             </div>
-            <h3 className="value">8.000+</h3>
+            <h3 className="value">5.000+</h3>
             <p className="label">Hướng Đạo Sinh và Tình nguyện viên</p>
           </div>
           

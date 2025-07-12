@@ -8,12 +8,12 @@ import HomepageAdmin from './admin/page/HomepageAdmin';
 import AdminLayout from './admin/component/AdminLayout/AdminLayout';
 import ProfileAdmin from './admin/page/InfoAdmin/ProfileAdmin';
 import ProjectAdmin from './admin/page/projectAdmin/ProjectAdmin';
-import MoreAbout from './pages/MoreAbout/MoreAbout';
+import MoreAbout from './pages/more about/MoreAbout';
 import BlogAdmin from './admin/page/BlogAdmin/BlogAdmin';
-import DonatePage from './pages/Donate/DonatePage';
-import ProjectPage from './pages/project/ProjectPage';
-import ProductPage from './pages/Products/ProductPage';
- 
+import DonatePage from './pages/donate/DonatePage';
+import ProjectPage from './pages/project/informations/ProjectPage';
+import ProductPage from './pages/products/ProductPage';
+import GalleryPage from './pages/project/gallery/GalleryPage';
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
         <Route path="/DonatePage" element={<Layout><DonatePage /></Layout>} />
         <Route path="/ProjectPage" element={<Layout><ProjectPage /></Layout>} />
         <Route path="/Products" element={<Layout><ProductPage /></Layout>} />
+        <Route path="/Gallery" element={<Layout><GalleryPage /></Layout>} />
         <Route path="/MoreAbout/:id" element={<Layout><MoreAbout /></Layout>} />
 
         <Route path="/ProfileAdmin" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />

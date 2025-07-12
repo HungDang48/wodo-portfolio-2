@@ -9,7 +9,7 @@ interface Product {
   description: string;
   badge?: string;
   features: string[];
-  image: string;
+  image: string[];
   formLink?: string;
   comingSoon?: boolean;
 }
@@ -22,9 +22,6 @@ const ProductPage: React.FC = () => {
 Chúng tôi đã mua và thành công bạn thì sao?
 Đây là một cơ hội để góp thành công cũng như tình yêu thương – hãy nhanh tay nhận ưu đãi dành cho các bạn đoàn sinh hoặc bất kỳ ai muốn lan tỏa hành động ý nghĩa này!
 🌟 NGOÀI RA CHÚNG MÌNH SẮP RA MẮT SẢN PHẨM KHÁC HÃY ĐÓN CHỜ NHÉ 
-📝 CÁCH ĐĂNG KÝ MUA HÀNG (Cực dễ!):
-Điền ngay form đăng ký bán buôn tại đây: 
-https://forms.gle/u7vH4B98GfcyJtdeA
 Xác nhận số lượng – nhận báo giá ưu đãi & các quyền lợi kèm theo
 Chốt đơn – Chuyển khoản – Đợi hàng giao tận tay
 🎁 ƯU ĐÃI DÀNH RIÊNG:
@@ -51,7 +48,7 @@ Nguyễn Phạm Tường Vy – 0868176774
       description: productDescription,
       badge: 'Hot',
       features: ['Quà tặng ý nghĩa', 'Lan tỏa yêu thương', 'Giao hàng tận nơi'],
-      image: '/products/vòngtay/1.jpg',
+      image: ['/products/vòngtay/1.jpg', '/products/vòngtay/2.jpg', '/products/vòngtay/3.jpg', '/products/vòngtay/4.jpg', '/products/vòngtay/5.jpg', '/products/vòngtay/6.jpg', '/products/vòngtay/7.jpg', '/products/vòngtay/8.jpg', '/products/vòngtay/9.jpg', '/products/vòngtay/10.jpg', '/products/vòngtay/11.jpg', '/products/vòngtay/12.jpg', '/products/vòngtay/13.jpg', '/products/vòngtay/14.jpg', '/products/vòngtay/15.jpg', '/products/vòngtay/16.jpg', '/products/vòngtay/17.jpg', '/products/vòngtay/18.jpg', '/products/vòngtay/19.jpg', '/products/vòngtay/20.jpg'].map((img) => img),
       formLink: 'https://forms.gle/u7vH4B98GfcyJtdeA'
     },
     {
@@ -62,7 +59,7 @@ Nguyễn Phạm Tường Vy – 0868176774
       description: '',
       badge: 'Coming',
       features: ['Sắp ra mắt!', 'Thiết kế độc quyền', 'Sản phẩm giới hạn'],
-      image: '/products/anno/1.jpg',
+      image: ['/products/anno/1.jpg'].map((img) => img),
       comingSoon: true
     }
   ];
@@ -190,11 +187,16 @@ Nguyễn Phạm Tường Vy – 0868176774
             <div className="modal-body">
               <h3 className="modal-title">{selectedProduct.title}</h3>
               <div className="modal-price">{selectedProduct.price}</div>
-              <img
-                src={selectedProduct.image}
-                alt={selectedProduct.title}
-                style={{ width: '100%', borderRadius: '10px', margin: '1rem 0' }}
-              />
+              <div style={{ display: 'flex', overflowX: 'auto', gap: '20px', margin: '1rem 0' }}>
+                {selectedProduct.image.map((imgUrl, idx) => (
+                  <img
+                    key={idx}
+                    src={imgUrl}
+                    alt={`${selectedProduct.title} ${idx + 1}`}
+                    style={{ height: '300px', borderRadius: '10px', flex: '0 0 auto', width: '300px', objectFit: 'cover' }}
+                  />
+                ))}
+              </div>
               <p className="modal-description" style={{ whiteSpace: 'pre-line' }}>
                 {selectedProduct.description}
               </p>

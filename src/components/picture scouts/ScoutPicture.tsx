@@ -10,12 +10,18 @@ const images = [
   process.env.PUBLIC_URL + "/img/scout4.png",
   process.env.PUBLIC_URL + "/img/scout5.png",
   process.env.PUBLIC_URL + "/img/scout6.png",
-  process.env.PUBLIC_URL + "/img/scout7.png",
+  process.env.PUBLIC_URL + "/img/scout7.jpg",
   process.env.PUBLIC_URL + "/img/scout9.png",
   process.env.PUBLIC_URL + "/img/scout10.png",
   process.env.PUBLIC_URL + "/img/scout11.png",
   process.env.PUBLIC_URL + "/img/scout12.png",
   process.env.PUBLIC_URL + "/img/scout13.png",
+  process.env.PUBLIC_URL + "/img/scout14.png",
+  process.env.PUBLIC_URL + "/img/scout15.jpg",
+  process.env.PUBLIC_URL + "/img/scout16.jpg",
+  process.env.PUBLIC_URL + "/img/scout17.jpg",
+  process.env.PUBLIC_URL + "/img/scout18.jpg",
+  process.env.PUBLIC_URL + "/img/scout19.jpg",
 ];
 
 

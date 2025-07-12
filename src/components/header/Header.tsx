@@ -6,6 +6,7 @@ import './header.css';
 const Header: React.FC = () => {
   // Trạng thái cho menu di động (đang mở hay đóng)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   // Trạng thái cho hiệu ứng scrolled (có scroll xuống hay không)
   const [isScrolled, setIsScrolled] = useState(false);
   // Trạng thái kiểm soát ẩn/hiện header khi scroll
@@ -29,12 +30,12 @@ const Header: React.FC = () => {
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => {
       const newState = !prev;
-      
+
       // Thêm hiệu ứng rung nhẹ nếu hỗ trợ
       if ('vibrate' in navigator) {
         navigator.vibrate(30);
       }
-      
+
       // Xử lý body scroll và focus management
       if (newState) {
         document.body.style.overflow = 'hidden';
@@ -51,7 +52,7 @@ const Header: React.FC = () => {
           menuToggle?.focus();
         }, 100);
       }
-      
+
       return newState;
     });
   }, []);
@@ -61,7 +62,7 @@ const Header: React.FC = () => {
     setIsMenuOpen(false);
     document.body.style.overflow = '';
     document.body.style.filter = '';
-    
+
     // Focus trở lại nút menu khi đóng
     setTimeout(() => {
       const menuToggle = document.querySelector('.menu-toggle') as HTMLElement;
@@ -126,13 +127,13 @@ const Header: React.FC = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
-      
+
       // Kiểm tra nếu click vào overlay thì đóng menu
       if (overlayRef.current && overlayRef.current.contains(target)) {
         closeMenu();
         return;
       }
-      
+
       // Kiểm tra nếu click bên ngoài menu và header
       if (
         isMenuOpen &&
@@ -196,37 +197,36 @@ const Header: React.FC = () => {
 
   // Danh sách điều hướng với enhanced descriptions
   const navItems = [
-    { 
-      to: '/AboutUs', 
-      icon: 'fa-info-circle', 
-      label: 'Về chúng tôi', 
-      description: 'Câu chuyện và sứ mệnh của WODO' 
+    {
+      to: '/AboutUs',
+      icon: 'fa-info-circle',
+      label: 'Về chúng tôi',
+      description: 'Câu chuyện và sứ mệnh của WODO'
     },
-    { 
-      to: '/ProjectPage', 
-      icon: 'fa-newspaper-o', 
-      label: 'Dự án', 
-      description: 'Những dự án tạo tác động tích cực' 
+    {
+      icon: 'fa-newspaper-o',
+      label: 'Dự án',
+      description: 'Những dự án tạo tác động tích cực',
+      children: [
+        { to: '/ProjectPage', label: 'Thông tin dự án' },
+        { to: '/Gallery', label: 'Hình ảnh' },
+        { to: '/Activities', label: 'Các hoạt động' },
+      ]
     },
-    { 
-      to: '/DonatePage', 
-      icon: 'fa-credit-card-alt', 
-      label: 'Donate', 
-      description: 'Đồng hành cùng chúng tôi' 
+    {
+      to: '/DonatePage',
+      icon: 'fa-credit-card-alt',
+      label: 'Donate',
+      description: 'Đồng hành cùng chúng tôi',
     },
-    { 
-      to: '/Contact', 
-      icon: 'fa-paper-plane', 
-      label: 'Liên hệ', 
-      description: 'Kết nối và hợp tác' 
-    },
-    { 
-      to: '/Products', 
-      icon: 'fa-product-hunt', 
-      label: 'Sản phẩm', 
-      description: 'Khám phá các sản phẩm của chúng tôi' 
+    {
+      to: '/Products',
+      icon: 'fa-product-hunt',
+      label: 'Sản phẩm',
+      description: 'Khám phá các sản phẩm của chúng tôi',
     },
   ];
+
 
   // Nút "Vì một thế giới tốt đẹp hơn" với enhanced UX
   const handleWorldButtonClick = () => {
@@ -234,15 +234,15 @@ const Header: React.FC = () => {
     if ('vibrate' in navigator) {
       navigator.vibrate([50, 30, 50]);
     }
-    
+
     // Smooth scroll với enhanced behavior
     const targetSection = document.getElementById('hero-section');
     if (targetSection) {
       // Thêm hiệu ứng loading tạm thời
       setIsLoading(true);
       setTimeout(() => setIsLoading(false), 800);
-      
-      targetSection.scrollIntoView({ 
+
+      targetSection.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
         inline: 'nearest'
@@ -256,7 +256,7 @@ const Header: React.FC = () => {
     if ('vibrate' in navigator) {
       navigator.vibrate(25);
     }
-    
+
     // Visual feedback cho page transitions
     if (location.pathname !== to) {
       setIsLoading(true);
@@ -270,7 +270,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header 
+      <header
         ref={headerRef}
         className={`header-user ${isScrolled ? 'scrolled' : ''} ${isVisible ? '' : 'hidden'} ${isLoading ? 'loading' : ''}`}
         role="banner"
@@ -283,16 +283,16 @@ const Header: React.FC = () => {
         <div className="header-user-container">
           {/* Logo và nút menu */}
           <div className="left-group">
-            <Link 
-              to="/" 
-              className="logo1" 
+            <Link
+              to="/"
+              className="logo1"
               aria-label="Trang chủ WODO - Vì một thế giới tốt đẹp hơn"
               onClick={() => handleNavClick('/')}
             >
               <span>WODO</span>
             </Link>
 
-            <button 
+            <button
               className="menu-toggle"
               onClick={toggleMenu}
               aria-label={isMenuOpen ? 'Đóng menu di động' : 'Mở menu di động'}
@@ -312,27 +312,49 @@ const Header: React.FC = () => {
           {/* Navigation trên desktop */}
           <nav className="nav" role="navigation" aria-label="Menu chính">
             {navItems.map((item, index) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className={location.pathname === item.to ? 'active' : ''}
-                aria-current={location.pathname === item.to ? 'page' : undefined}
-                title={item.description}
-                onClick={() => handleNavClick(item.to)}
-                style={{ 
-                  animationDelay: `${index * 0.1}s`,
-                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                }}
-              >
-                <i className={`fa ${item.icon}`} aria-hidden="true"></i>
-                <span>{item.label}</span>
-              </Link>
+              item.children ? (
+                <div className="nav-dropdown" key={item.label}>
+                  <button className="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                    <i className={`fa ${item.icon}`} aria-hidden="true"></i>
+                    <span>{item.label}</span>
+                  </button>
+                  <div className="dropdown-menu">
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.to}
+                        to={child.to}
+                        className={location.pathname === child.to ? 'active' : ''}
+                        onClick={() => handleNavClick(child.to)}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className={location.pathname === item.to ? 'active' : ''}
+                  aria-current={location.pathname === item.to ? 'page' : undefined}
+                  title={item.description}
+                  onClick={() => handleNavClick(item.to)}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                  }}
+                >
+                  <i className={`fa ${item.icon}`} aria-hidden="true"></i>
+                  <span>{item.label}</span>
+                </Link>
+              )
             ))}
+
           </nav>
 
           {/* Nút chính kêu gọi hành động */}
-          <button 
-            className="world-button" 
+          <button
+            className="world-button"
             type="button"
             onClick={handleWorldButtonClick}
             aria-label="Vì một thế giới tốt đẹp hơn - Tìm hiểu thêm về sứ mệnh của chúng tôi"
@@ -352,7 +374,7 @@ const Header: React.FC = () => {
       </header>
 
       {/* Lớp phủ mờ khi mở menu trên mobile */}
-      <div 
+      <div
         ref={overlayRef}
         className={`mobile-nav-overlay ${isMenuOpen ? 'active' : ''}`}
         onClick={closeMenu}
@@ -399,33 +421,61 @@ const Header: React.FC = () => {
 
         <div className="mobile-nav-content">
           {navItems.map((item, index) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => {
-                handleNavClick(item.to);
-                closeMenu();
-              }}
-              className={location.pathname === item.to ? 'active' : ''}
-              aria-current={location.pathname === item.to ? 'page' : undefined}
-              tabIndex={isMenuOpen ? 0 : -1}
-              style={{ 
-                animationDelay: `${(index + 1) * 0.05}s`,
-                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-              }}
-            >
-              <i className={`fa ${item.icon}`} aria-hidden="true"></i>
-              <div>
-                <span className="nav-label">{item.label}</span>
-                <small className="nav-description">{item.description}</small>
+            item.children ? (
+              <div key={item.label} className="mobile-dropdown">
+                <button
+                  className="mobile-dropdown-toggle"
+                  aria-haspopup="true"
+                  aria-expanded={openDropdown === item.label}
+                  onClick={() => {
+                    setOpenDropdown(openDropdown === item.label ? null : item.label);
+                  }}
+                >
+                  <i className={`fa ${item.icon}`} aria-hidden="true"></i>
+                  <span>{item.label}</span>
+                </button>
+
+                <div className="mobile-dropdown-menu">
+                  {item.children.map((child) => (
+                    <Link
+                      key={child.to}
+                      to={child.to}
+                      onClick={() => {
+                        handleNavClick(child.to);
+                        closeMenu();
+                      }}
+                      className={location.pathname === child.to ? 'active' : ''}
+                      tabIndex={isMenuOpen ? 0 : -1}
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </Link>
+            ) : (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={location.pathname === item.to ? 'active' : ''}
+                aria-current={location.pathname === item.to ? 'page' : undefined}
+                title={item.description}
+                onClick={() => handleNavClick(item.to)}
+                style={{
+                  animationDelay: `${index * 0.1}s`,
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }}
+              >
+                <i className={`fa ${item.icon}`} aria-hidden="true"></i>
+                <span>{item.label}</span>
+              </Link>
+            )
           ))}
+
         </div>
 
         {/* Footer của mobile menu */}
         <div className="mobile-nav-footer">
-          <button 
+          <button
             className="mobile-world-button"
             onClick={() => {
               closeMenu();
