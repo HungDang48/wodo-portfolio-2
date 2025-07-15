@@ -10,9 +10,9 @@ import ProfileAdmin from './admin/page/InfoAdmin/ProfileAdmin';
 import ProjectAdmin from './admin/page/projectAdmin/ProjectAdmin';
 import MoreAbout from './pages/more about/MoreAbout';
 import BlogAdmin from './admin/page/BlogAdmin/BlogAdmin';
-import DonatePage from './pages/donate/DonatePage';
+import DonatePage from './pages/Donate/DonatePage';
 import ProjectPage from './pages/project/informations/ProjectPage';
-import ProductPage from './pages/products/ProductPage';
+import ProductPage from './pages/Products/ProductPage';
 import GalleryPage from './pages/project/gallery/GalleryPage';
 
 function App() {
