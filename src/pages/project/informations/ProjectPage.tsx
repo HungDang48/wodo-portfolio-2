@@ -5,21 +5,26 @@ const bmcData = {
   keyPartners: [
     'Mái ấm cha Tịnh',
     'Các bạn hướng đạo sinh đơn vị',
-    'Liên đoàn Tao Phùng'
+    'Đạo Tao Phùng'
   ],
   keyActivities: [
-    'Thiết kế các trò chơi thiên nhiên',
+    'Thiết kế các trò chơi trong chương trình sinh hoạt của Hải Ly & Ấu',
+    'Sinh hoạt chính dựa trên các hoạt động thủ công',
     'Tổ chức sinh hoạt phù hợp cho trẻ độ tuổi Sói – Hài Ly',
     'Gây quỹ & quản lý tài trợ duy trì sinh hoạt',
     'Đánh giá tác động và rủi ro tài chính',
+    'Đánh giá tác động của chương trình sinh hoạt sau khoảng thời gian cụ thể',
     'Xây dựng tài liệu hoạt động & quản lý'
   ],
   valuePropositions: [
-    'Không gian vui chơi sáng tạo và an toàn cho trẻ mồ côi',
-    'Giáo dục kỹ năng sống và tinh thần tập thể',
+    'Không gian vui chơi sáng tạo và an toàn cho trẻ tại mái ấm',
+    'Phát triển khả năng giải quyết vấn đề: Khi trẻ không biết làm sao để dán, cắt, xếp – trẻ sẽ học cách thử nghiệm và điều chỉnh',
+    'Tăng sự kiên nhẫn, tập trung: Làm thủ công giúp trẻ học cách làm việc theo từng bước và hoàn thiện sản phẩm',
+    'Âm nhạc giúp trẻ biểu lộ cảm xúc, thư giãn, vui vẻ hoặc đồng cảm với người khác.' ,
+    'Trẻ học chia sẻ, hợp tác, tuân thủ luật lệ và quản lý cảm xúc (khi thắng/thua).',
     'Giảm cảm giác cô lập và tăng kết nối xã hội',
     'Góp phần vào SDGs: Giáo dục, Bình đẳng, Hạnh phúc',
-    'Giảm nguy cơ mắc bệnh tâm lý ở trẻ mồ côi'
+    'Giảm nguy cơ mắc bệnh tâm lý ở trẻ em nhỏ',
   ],
   customerRelationships: [
     'Gắn kết qua hoạt động tình nguyện thường xuyên',
@@ -32,11 +37,12 @@ const bmcData = {
   ],
   keyResources: [
     'Thành viên toán WODO',
-    'Tráng sinh liên đoàn Tao Phùng'
+    'Tráng sinh liên đoàn Tao Phùng',
+    'Các bạn cộng tác viên xã hội',
   ],
   channels: [
     'Hợp tác với trại trẻ mồ côi & tổ chức xã hội bên ngoài',
-    'Truyền thông mạng xã hội (Facebook, TikTok, YouTube)',
+    'Truyền thông mạng xã hội (Facebook, Website)',
     'Landing page giới thiệu dự án của toán WODO'
   ],
   costStructure: [
@@ -214,14 +220,6 @@ const ProjectPage: React.FC = () => {
             />
           </div>
         </div>
-
-        {/* Footer */}
-        {/* <div className="page-footer">
-          <div className="footer-badge">
-            <div className="status-dot"></div>
-            <span className="footer-text">Project Framework</span>
-          </div>
-        </div> */}
       </div>
     </div>
   );

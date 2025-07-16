@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ViewImageComponents from './ImageViewComponent';
 import './GalleryPage.css';
 
 interface ImageItem {
@@ -15,7 +16,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout1.png",
     title: "Thủ công tô màu",
     description: "Các bạn nhỏ tham gia hoạt động thủ công, khám phá sự sáng tạo của bản thân",
-    date: "2025-01-15",
+    date: "2025-05-25",
     category: "thu-cong",
     tags: ["thủ công", "hoạt động"]
   },
@@ -23,7 +24,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout2.png",
     title: "Thủ công gấp giấy",
     description: "Các em cùng nhau tham gia hoạt động thủ công gấp giấy, rèn luyện sự khéo léo và sáng tạo",
-    date: "2025-01-20",
+    date: "2025-05-25",
     category: "thu-cong",
     tags: ["thủ công", "hoạt động", "gấp giấy"]
   },
@@ -31,7 +32,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout3.png",
     title: "Thủ công gấp giấy",
     description: "Hướng dẫn các em nhỏ cách gấp giấy thành những hình thú đáng yêu sau khi tô màu",
-    date: "2025-01-20",
+    date: "2025-05-25",
     category: "thu-cong",
     tags: ["thủ công", "hoạt động", "tập thể"]
   },
@@ -39,7 +40,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout4.png",
     title: "Thủ công gấp giấy",
     description: "Hướng dẫn các em nhỏ cách gấp giấy thành những hình thú đáng yêu sau khi tô màu",
-    date: "2025-01-20",
+    date: "2025-05-25",
     category: "thu-cong",
     tags: ["thủ công", "hoạt động", "tập thể"]
   },
@@ -47,7 +48,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout5.png",
     title: "Thu lại giấy tô màu",
     description: "Hướng dẫn các em nhỏ cách thu lại giấy tô màu sau khi sử dụng",
-    date: "2025-01-20",
+    date: "2025-05-25",
     category: "thu-cong",
     tags: ["tái chế", "hoạt động", "tập thể"]
   },
@@ -55,7 +56,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout6.png",
     title: "Chơi đùa cùng nhau",
     description: "Các em nhỏ cách chơi đùa và tương tác với các cộng tác viên để tạo ra những khoảnh khắc vui vẻ",
-    date: "2025-01-20",
+    date: "2025-05-25",
     category: "sinh-hoat",
     tags: ["vui chơi", "hoạt động", "tập thể"]
   },
@@ -63,7 +64,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout7.jpg",
     title: "Giới thiệu về hướng đạo",
     description: "Các em nhỏ được giới thiệu về tổ chức hướng đạo và các hoạt động của hải ly",
-    date: "2025-01-20",
+    date: "2025-05-218",
     category: "sinh-hoat",
     tags: ["hướng đạo", "giới thiệu", "tổ chức"]
   },
@@ -71,7 +72,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout9.png",
     title: "Giới thiệu về hướng đạo",
     description: "Các em nhỏ được giới thiệu về tổ chức hướng đạo và các hoạt động của hải ly",
-    date: "2025-01-20",
+    date: "2025-05-18",
     category: "huong-dao",
     tags: ["hướng đạo", "giới thiệu", "tổ chức"]
   },
@@ -79,7 +80,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout10.png",
     title: "Thủ công tô màu",
     description: "Hải ly sau khi tô màu các nhân vật trong câu chuyện rừng xanh",
-    date: "2025-01-15",
+    date: "2025-05-18",
     category: "huong-dao",
     tags: ["thủ công", "hoạt động", "tô màu"]
   },
@@ -87,7 +88,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout11.png",
     title: "Thủ công tô màu",
     description: "Giới thiệu về các nhân vật trong câu chuyện rừng xanh và hướng dẫn các em tô màu",
-    date: "2025-01-15",
+    date: "2025-05-18",
     category: "huong-dao",
     tags: ["thủ công", "hoạt động", "tô màu", "tập thể"]
   },
@@ -95,7 +96,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout12.png",
     title: "Thủ công tô màu",
     description: "Giới thiệu về các nhân vật trong câu chuyện rừng xanh và hướng dẫn các em tô màu",
-    date: "2025-01-15",
+    date: "2025-05-18",
     category: "huong-dao",
     tags: ["thủ công", "hoạt động", "tô màu", "tập thể"]
   },
@@ -103,7 +104,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout13.png",
     title: "Cộng đồng và chia sẻ",
     description: "Phát bánh kẹo cho các em hải ly hoạt động tốt và sinh hoạt tích cực",
-    date: "2024-05-01",
+    date: "2024-05-18",
     category: "chia-se",
     tags: ["cộng đồng", "chia sẻ", "phát thưởng"]
   },
@@ -111,7 +112,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout14.png",
     title: "Hướng dẫn làm kính mặt trời",
     description: "Hướng dẫn các em nhỏ cách làm kính mặt trời",
-    date: "2025-01-20",
+    date: "2025-06-08",
     category: "thu-cong",
     tags: ["thủ công", "hoạt động", "tập thể"]
   },
@@ -119,7 +120,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout15.jpg",
     title: "Chơi đùa cùng nhau",
     description: "Các em nhỏ cách chơi đùa và tương tác với các cộng tác viên để tạo ra những khoảnh khắc vui vẻ",
-    date: "2025-01-20",
+    date: "2025-06-15",
     category: "sinh-hoat",
     tags: ["vui chơi", "hoạt động", "tập thể"]
   },
@@ -127,7 +128,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout16.jpg",
     title: "Chơi đùa cùng nhau",
     description: "Các em nhỏ cách chơi đùa và tương tác với các cộng tác viên để tạo ra những khoảnh khắc vui vẻ",
-    date: "2025-01-20",
+    date: "2025-06-15",
     category: "sinh-hoat",
     tags: ["vui chơi", "hoạt động", "tập thể"]
   },
@@ -135,7 +136,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout17.jpg",
     title: "Chơi đùa cùng nhau",
     description: "Các em nhỏ cách chơi đùa và tương tác với các cộng tác viên để tạo ra những khoảnh khắc vui vẻ",
-    date: "2025-01-20",
+    date: "2025-06-15",
     category: "sinh-hoat",
     tags: ["vui chơi", "hoạt động", "tập thể"]
   },
@@ -143,7 +144,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout18.jpg",
     title: "Thủ công tô màu",
     description: "Các bạn nhỏ tham gia hoạt động thủ công, khám phá sự sáng tạo của bản thân",
-    date: "2025-01-15",
+    date: "2025-05-18",
     category: "thu-cong",
     tags: ["thủ công", "hoạt động"]
   },
@@ -151,7 +152,7 @@ const imageData: ImageItem[] = [
     src: process.env.PUBLIC_URL + "/img/scout19.jpg",
     title: "Chơi đùa cùng nhau",
     description: "Các em nhỏ cách chơi đùa và tương tác với các cộng tác viên để tạo ra những khoảnh khắc vui vẻ",
-    date: "2025-01-20",
+    date: "2025-06-15",
     category: "sinh-hoat",
     tags: ["vui chơi", "hoạt động", "tập thể"]
   }
@@ -166,7 +167,7 @@ const categories = [
 ];
 
 const GalleryPage: React.FC = () => {
-  const [visibleCount, setVisibleCount] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(8);
   const [startAnimation, setStartAnimation] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -176,7 +177,7 @@ const GalleryPage: React.FC = () => {
   const [isLiked, setIsLiked] = useState<Set<number>>(new Set());
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Đơn giản hóa: chỉ lọc theo category
+  // Lọc ảnh theo category
   const filteredImages = imageData.filter(image => {
     return selectedCategory === 'all' || image.category === selectedCategory;
   }).sort((a, b) => {
@@ -209,38 +210,27 @@ const GalleryPage: React.FC = () => {
     };
   }, []);
 
+  // Reset visibleCount khi thay đổi category
   useEffect(() => {
-    if (startAnimation && visibleCount < filteredImages.length) {
-      const timer = setTimeout(() => {
-        setVisibleCount((prev) => prev + 1);
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [startAnimation, visibleCount, filteredImages.length]);
-
-  useEffect(() => {
-    setVisibleCount(0);
+    setVisibleCount(8);
     setStartAnimation(false);
+    setTimeout(() => setStartAnimation(true), 100);
   }, [selectedCategory, sortBy]);
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-    document.body.style.overflow = 'auto';
   };
 
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const prevImage = () => {
     setCurrentIndex((prev) => (prev === 0 ? filteredImages.length - 1 : prev - 1));
   };
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const nextImage = () => {
     setCurrentIndex((prev) => (prev === filteredImages.length - 1 ? 0 : prev + 1));
   };
 
@@ -281,34 +271,16 @@ const GalleryPage: React.FC = () => {
     }, {} as Record<number, ImageItem[]>);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxOpen) return;
-
-      switch (e.key) {
-        case 'ArrowLeft':
-          setCurrentIndex((prev) => (prev === 0 ? filteredImages.length - 1 : prev - 1));
-          break;
-        case 'ArrowRight':
-          setCurrentIndex((prev) => (prev === filteredImages.length - 1 ? 0 : prev + 1));
-          break;
-        case 'Escape':
-          closeLightbox();
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen, filteredImages.length]);
-
+  const loadMoreImages = () => {
+    setVisibleCount(prev => Math.min(prev + 8, filteredImages.length));
+  };
 
   const renderGridView = () => (
     <div className={`gallery-container ${viewMode}`}>
-      {filteredImages.map((image, index) => (
+      {filteredImages.slice(0, visibleCount).map((image, index) => (
         <div
-          key={index}
-          className={`gallery-item ${index < visibleCount ? 'visible' : ''}`}
+          key={`${image.src}-${index}`}
+          className={`gallery-item ${startAnimation ? 'visible' : ''}`}
           onClick={() => openLightbox(index)}
         >
           <div className="image-wrapper">
@@ -316,6 +288,14 @@ const GalleryPage: React.FC = () => {
               src={image.src}
               alt={image.title}
               loading="lazy"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const wrapper = target.parentElement;
+                if (wrapper) {
+                  wrapper.innerHTML = `<div class="image-error">❌ Không thể tải ảnh</div>`;
+                }
+              }}
             />
             <div className="image-overlay">
               <div className="image-info">
@@ -343,14 +323,22 @@ const GalleryPage: React.FC = () => {
           </div>
         </div>
       ))}
+      {visibleCount < filteredImages.length && (
+        <div className="load-more-container">
+          <button className="load-more-btn" onClick={loadMoreImages}>
+            📸 Xem ({filteredImages.length - visibleCount} ảnh)
+          </button>
+        </div>
+      )}
     </div>
   );
 
   const renderTimelineView = () => {
-    const groupedImages = groupByYear(filteredImages);
+    const visibleImages = filteredImages.slice(0, visibleCount);
+    const groupedImages = groupByYear(visibleImages);
     const years = Object.keys(groupedImages).sort((a, b) => parseInt(b) - parseInt(a));
 
-        return (
+    return (
       <div className="timeline-container">
         {years.map((year) => (
           <div key={year} className="timeline-year-group">
@@ -360,12 +348,24 @@ const GalleryPage: React.FC = () => {
                 const globalIndex = filteredImages.findIndex((img) => img.src === image.src);
                 return (
                   <div
-                    key={globalIndex}
-                    className={`timeline-item ${globalIndex < visibleCount ? 'visible' : ''}`}
+                    key={`${image.src}-${globalIndex}`}
+                    className={`timeline-item ${startAnimation ? 'visible' : ''}`}
                     onClick={() => openLightbox(globalIndex)}
                   >
                     <div className="image-wrapper">
-                      <img src={image.src} alt={image.title} loading="lazy" />
+                      <img 
+                        src={image.src} 
+                        alt={image.title} 
+                        loading="lazy" 
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const wrapper = target.parentElement;
+                          if (wrapper) {
+                            wrapper.innerHTML = `<div class="image-error">❌ Không thể tải ảnh</div>`;
+                          }
+                        }}
+                      />
                       <div className="image-info">
                         <h3>{image.title}</h3>
                         <p>{image.description}</p>
@@ -391,23 +391,37 @@ const GalleryPage: React.FC = () => {
             </div>
           </div>
         ))}
+        {visibleCount < filteredImages.length && (
+          <div className="load-more-container">
+            <button className="load-more-btn" onClick={loadMoreImages}>
+              Xem thêm ({filteredImages.length - visibleCount} ảnh)
+            </button>
+          </div>
+        )}
       </div>
     );
   };
 
-
   const renderMasonryView = () => (
     <div className="masonry-container">
-      {filteredImages.map((image, index) => (
+      {filteredImages.slice(0, visibleCount).map((image, index) => (
         <div
-          key={index}
-          className={`masonry-item ${index < visibleCount ? 'visible' : ''}`}
+          key={`${image.src}-${index}`}
+          className={`masonry-item ${startAnimation ? 'visible' : ''}`}
           onClick={() => openLightbox(index)}
         >
           <img
             src={image.src}
             alt={image.title}
             loading="lazy"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              const wrapper = target.parentElement;
+              if (wrapper) {
+                wrapper.innerHTML = `<div class="image-error">❌ Không thể tải ảnh</div>`;
+              }
+            }}
           />
           <div className="masonry-overlay">
             <h4>{image.title}</h4>
@@ -421,6 +435,13 @@ const GalleryPage: React.FC = () => {
           </button>
         </div>
       ))}
+      {visibleCount < filteredImages.length && (
+        <div className="load-more-container">
+          <button className="load-more-btn" onClick={loadMoreImages}>
+            Xem thêm ({filteredImages.length - visibleCount} ảnh)
+          </button>
+        </div>
+      )}
     </div>
   );
 
@@ -432,24 +453,26 @@ const GalleryPage: React.FC = () => {
       </div>
 
       <div className="gallery-controls">
-
         <div className="filter-controls">
           <div className="view-mode-buttons">
             <button
               className={viewMode === 'grid' ? 'active' : ''}
               onClick={() => setViewMode('grid')}
+              title="Lưới"
             >
               📱
             </button>
             <button
               className={viewMode === 'timeline' ? 'active' : ''}
               onClick={() => setViewMode('timeline')}
+              title="Thời gian"
             >
               📅
             </button>
             <button
               className={viewMode === 'masonry' ? 'active' : ''}
               onClick={() => setViewMode('masonry')}
+              title="Gạch"
             >
               📐
             </button>
@@ -479,39 +502,24 @@ const GalleryPage: React.FC = () => {
           <span className="stat-number">{categories.length - 1}</span>
           <span className="stat-label">Danh mục</span>
         </div>
+        <div className="stat-item">
+          <span className="stat-number">{visibleCount}</span>
+          <span className="stat-label">Đang hiển thị</span>
+        </div>
       </div>
 
       {viewMode === 'grid' && renderGridView()}
       {viewMode === 'timeline' && renderTimelineView()}
       {viewMode === 'masonry' && renderMasonryView()}
 
-      {lightboxOpen && (
-        <div className="lightbox-overlay" onClick={closeLightbox}>
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={closeLightbox}>×</button>
-            <button className="nav-btn left" onClick={prevImage}>‹</button>
-            <div className="lightbox-image-container">
-              <img src={filteredImages[currentIndex]?.src} alt={filteredImages[currentIndex]?.title} />
-              <div className="lightbox-info">
-                <h3>{filteredImages[currentIndex]?.title}</h3>
-                <p>{filteredImages[currentIndex]?.description}</p>
-                <div className="lightbox-meta">
-                  <span className="date">{formatDate(filteredImages[currentIndex]?.date)}</span>
-                  <div className="tags">
-                    {filteredImages[currentIndex]?.tags.map((tag, index) => (
-                      <span key={index} className="tag">#{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button className="nav-btn right" onClick={nextImage}>›</button>
-            <div className="counter">
-              {currentIndex + 1} / {filteredImages.length}
-            </div>
-          </div>
-        </div>
-      )}
+      <ViewImageComponents
+        isOpen={lightboxOpen}
+        currentIndex={currentIndex}
+        images={filteredImages}
+        onClose={closeLightbox}
+        onPrevious={prevImage}
+        onNext={nextImage}
+      />
     </div>
   );
 };

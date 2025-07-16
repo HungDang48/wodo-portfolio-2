@@ -209,8 +209,9 @@ const Header: React.FC = () => {
       description: 'Những dự án tạo tác động tích cực',
       children: [
         { to: '/ProjectPage', label: 'Thông tin dự án' },
-        { to: '/Gallery', label: 'Hình ảnh' },
-        { to: '/Activities', label: 'Các hoạt động' },
+        { to: '/GalleryPage', label: 'Hình ảnh' },
+        // { to: '/Activities', label: 'Các hoạt động' },
+        { to: '/ContactPage', label: 'Thông tin liên hệ' },
       ]
     },
     {

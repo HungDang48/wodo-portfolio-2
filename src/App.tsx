@@ -14,6 +14,7 @@ import DonatePage from './pages/Donate/DonatePage';
 import ProjectPage from './pages/project/informations/ProjectPage';
 import ProductPage from './pages/Products/ProductPage';
 import GalleryPage from './pages/project/gallery/GalleryPage';
+import ContactPage from './pages/project/contact/ContactPage';
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
         <Route path="/DonatePage" element={<Layout><DonatePage /></Layout>} />
         <Route path="/ProjectPage" element={<Layout><ProjectPage /></Layout>} />
         <Route path="/Products" element={<Layout><ProductPage /></Layout>} />
-        <Route path="/Gallery" element={<Layout><GalleryPage /></Layout>} />
+        <Route path="/GalleryPage" element={<Layout><GalleryPage /></Layout>} />
+        <Route path="/ContactPage" element={<Layout><ContactPage /></Layout>} />
         <Route path="/MoreAbout/:id" element={<Layout><MoreAbout /></Layout>} />
 
         <Route path="/ProfileAdmin" element={<AdminLayout><ProfileAdmin /></AdminLayout>} />
