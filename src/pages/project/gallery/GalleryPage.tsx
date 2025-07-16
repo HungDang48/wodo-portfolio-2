@@ -172,17 +172,13 @@ const GalleryPage: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'timeline' | 'masonry'>('grid');
-  const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'date' | 'title'>('date');
   const [isLiked, setIsLiked] = useState<Set<number>>(new Set());
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // Đơn giản hóa: chỉ lọc theo category
   const filteredImages = imageData.filter(image => {
-    const matchesCategory = selectedCategory === 'all' || image.category === selectedCategory;
-    const matchesSearch = image.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         image.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         image.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
+    return selectedCategory === 'all' || image.category === selectedCategory;
   }).sort((a, b) => {
     if (sortBy === 'date') {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -225,7 +221,7 @@ const GalleryPage: React.FC = () => {
   useEffect(() => {
     setVisibleCount(0);
     setStartAnimation(false);
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [selectedCategory, sortBy]);
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);

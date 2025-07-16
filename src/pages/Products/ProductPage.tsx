@@ -19,23 +19,22 @@ const ProductPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const productDescription = `🎉 [THÔNG BÁO BUÔN BÁN VÒNG TAY NHÂN ÁI] 🎉
-Chúng tôi đã mua và thành công bạn thì sao?
-Đây là một cơ hội để góp thành công cũng như tình yêu thương – hãy nhanh tay nhận ưu đãi dành cho các bạn đoàn sinh hoặc bất kỳ ai muốn lan tỏa hành động ý nghĩa này!
+  📌Dự án Vòng tay nhân ái là một hoạt động gây quỹ bởi toán WODO  thuộc khuôn khổ Trại Thế Giới Tốt Đẹp Hơn Lần 2 - Better World Camp 2, Pathfinder Scouts Vietnam.
+  ✨Vòng tay nhân ái không chỉ là một món phụ kiện, mà còn là biểu tượng của tình người, sự sẻ chia và cam kết không để bất kỳ ai bị bỏ lại phía sau. Mỗi chiếc vòng tay bạn sở hữu sẽ đóng góp trực tiếp vào QUỸ WODO (Quỹ Hỗ trợ xây dựng sân chơi cho trẻ em mồ côi), góp phần mang lại niềm vui và hy vọng cho các em nhỏ có hoàn cảnh khó khăn.
+Đây không chỉ là một sản phẩm, mà còn là cơ hội để lan tỏa yêu thương và hành động tử tế đến cộng đồng.
 🌟 NGOÀI RA CHÚNG MÌNH SẮP RA MẮT SẢN PHẨM KHÁC HÃY ĐÓN CHỜ NHÉ 
-Xác nhận số lượng – nhận báo giá ưu đãi & các quyền lợi kèm theo
-Chốt đơn – Chuyển khoản – Đợi hàng giao tận tay
 🎁 ƯU ĐÃI DÀNH RIÊNG:
 ✔️ Đơn từ 10 sản phẩm: Freeship nội thành HCM & Biên Hòa
 ✔️ Ship theo đợt cho khu vực Huế – Đà Nẵng 
-✔️ Được hỗ trợ hình ảnh cùng các hot idea của toán wodo /-rose 
+✔️ Được hỗ trợ hình ảnh cùng các hot idea của toán WODO /-rose 
 📦 HÌNH THỨC NHẬN HÀNG:
 Nội thành HCM, Biên Hòa: Giao nhanh, nhận trong ngày hoặc 6 – 7 ngày
 Huế, Đà Nẵng: Ship tập trung theo đợt, nhận hàng tận tay hoặc tại điểm tập trung (sẽ báo cụ thể khi hàng về)
 Ngoài ra chúng mình còn hỗ trợ nhận hàng trong trại 95 năm và các đợt trại khác nhau nữa, tiết kiệm chi phí nhất có thể
 💡 Đặc biệt, bạn có thể rủ rê các đội nhóm trong khu vực gom đơn chung để vừa tiết kiệm, vừa thắt chặt tình đoàn kết nữa đó!
 📞 Mọi thắc mắc liên hệ ngay:
-Nguyễn Đình Khánh Ngân – 0399201545
-Nguyễn Phạm Tường Vy – 0868176774
+Nguyễn Đình Khánh Ngân (Trưởng Dự Án) - SĐT : 0399201545, Email : khanhngan1491@gmail.com
+Nguyễn Phạm Tường Vy (Thành viên dự án) – SĐT: 0868176774, Email:nguyenphantuongvy2104@gmail.com
 🌈 Cùng nhau lan tỏa yêu thương – Kết nối ngàn trái tim!
 #Vongtaynhanai #BWC2 #Wodo #pathfinderscoutsvietnam #SDGs`;
 
@@ -128,17 +127,7 @@ Nguyễn Phạm Tường Vy – 0868176774
   return (
     <div className="page-container">
       {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <a href="#" className="logo">WODO Shop</a>
-          <ul className="nav-links">
-            <li><a href="#" onClick={() => scrollToSection('home')}>Trang Chủ</a></li>
-            <li><a href="#" onClick={() => scrollToSection('products')}>Sản Phẩm</a></li>
-            <li><a href="#" onClick={() => scrollToSection('about')}>Giới Thiệu</a></li>
-            <li><a href="#" onClick={() => scrollToSection('contact')}>Liên Hệ</a></li>
-          </ul>
-        </div>
-      </nav>
+      
 
       {/* Hero Section */}
       <section className="hero" id="home">
