@@ -18,7 +18,7 @@ const ProductPage: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const productDescription = `🎉 [THÔNG BÁO BUÔN BÁN VÒNG TAY NHÂN ÁI] 🎉
+  const productDescription1 = `🎉 [THÔNG BÁO BUÔN BÁN VÒNG TAY NHÂN ÁI] 🎉
   📌Dự án Vòng tay nhân ái là một hoạt động gây quỹ bởi toán WODO  thuộc khuôn khổ Trại Thế Giới Tốt Đẹp Hơn Lần 2 - Better World Camp 2, Pathfinder Scouts Vietnam.
   ✨Vòng tay nhân ái không chỉ là một món phụ kiện, mà còn là biểu tượng của tình người, sự sẻ chia và cam kết không để bất kỳ ai bị bỏ lại phía sau. Mỗi chiếc vòng tay bạn sở hữu sẽ đóng góp trực tiếp vào QUỸ WODO (Quỹ Hỗ trợ xây dựng sân chơi cho trẻ em mồ côi), góp phần mang lại niềm vui và hy vọng cho các em nhỏ có hoàn cảnh khó khăn.
 Đây không chỉ là một sản phẩm, mà còn là cơ hội để lan tỏa yêu thương và hành động tử tế đến cộng đồng.
@@ -38,13 +38,40 @@ Nguyễn Phạm Tường Vy (Thành viên dự án) – SĐT: 0868176774, Ema
 🌈 Cùng nhau lan tỏa yêu thương – Kết nối ngàn trái tim!
 #Vongtaynhanai #BWC2 #Wodo #pathfinderscoutsvietnam #SDGs`;
 
+  const productDescription2 = `🎉 [THÔNG BÁO MỞ BÁN SẢN PHẨM “ANO” TẠI TRẠI 95 NĂM] 🎉
+✨ Tự hào thủ công – Gửi trao yêu thương ✨
+Sau vòng tay nhân ái, chúng mình tiếp tục lan tỏa tình yêu thương bằng một sản phẩm siêu dễ thương – siêu ý nghĩa: ANO – biểu cảm đáng yêu, truyền cảm hứng tích cực đến mọi người! 💖
+🧸 ANO thủ công dùng làm gì?
+Những em ano nhỏ xinh được làm thủ công với nhiều biểu cảm và hình dạng khác nhau, tạo điểm nhấn cho khăn quàng, túi xách, dây đeo, ... hoặc làm quà tặng đáng yêu.
+💰 Giá bán:
+Chỉ từ 20.000đ – 25.000đ/sản phẩm tùy loại hình dáng và độ chi tiết. Giá cực dễ thương cho một hành động cực kỳ tử tế!
+Chúng mình còn nhận móc các loại ano theo yêu cầu với giá 30.000đ/sản phẩm!!
+🌟 ĐẶC BIỆT TRONG TRẠI 95 NĂM:
+✔️ Đặt tại chỗ – nhận hàng tận tay
+✔️ Mua nhiều được ưu đãi (gom nhóm nhé!)
+✔️ Có mẫu giới hạn – nhanh tay kẻo hết!
+📌 CÁCH MUA ANÔ TRONG TRẠI:
+📍 Tìm đến gian hàng của WODO tại khu trưng bày
+📍 Tìm đến toán trưởng wodo (Nguyễn Đình Khánh Ngân) ở tiểu trại tráng
+📍 Chọn mẫu – thanh toán – nhận ngay
+📦 GIAO HÀNG SAU TRẠI (nếu muốn mua tiếp):
+Freeship nội thành HCM, Biên Hòa với đơn từ 10 sản phẩm
+Giao hàng tập trung khu vực Huế – Đà Nẵng
+Hỗ trợ nhận tại các đợt trại lớn sau
+📞 Liên hệ tư vấn nhanh:
+Nguyễn Đình Khánh Ngân – 0399 201 545
+Nguyễn Phạm Tường Vy – 0868 176 774
+💡 Mỗi chiếc ANÔ bạn mua không chỉ là một món đồ nhỏ xinh, mà còn là cách bạn gửi trao yêu thương và đồng hành cùng những dự án ý nghĩa của tụi mình.
+🎈 Cùng tạo nên trại 95 năm thật đáng nhớ nhé!
+#ANO #95nam #WODO #ScoutSpirit #SDGs #LenThuCong #ChiaSeYeuThuong`;
+
   const products: Product[] = [
     {
       id: 'product1',
       icon: '🧿',
       title: 'Vòng tay',
       price: '25.000₫',
-      description: productDescription,
+      description: productDescription1,
       badge: 'Hot',
       features: ['Quà tặng ý nghĩa', 'Lan tỏa yêu thương', 'Giao hàng tận nơi'],
       image: ['/products/vòngtay/1.jpg', '/products/vòngtay/2.jpg', '/products/vòngtay/3.jpg', '/products/vòngtay/4.jpg', '/products/vòngtay/5.jpg', '/products/vòngtay/6.jpg', '/products/vòngtay/7.jpg', '/products/vòngtay/8.jpg', '/products/vòngtay/9.jpg', '/products/vòngtay/10.jpg', '/products/vòngtay/11.jpg', '/products/vòngtay/12.jpg', '/products/vòngtay/13.jpg', '/products/vòngtay/14.jpg', '/products/vòngtay/15.jpg', '/products/vòngtay/16.jpg', '/products/vòngtay/17.jpg', '/products/vòngtay/18.jpg', '/products/vòngtay/19.jpg', '/products/vòngtay/20.jpg'].map((img) => img),
@@ -54,12 +81,12 @@ Nguyễn Phạm Tường Vy (Thành viên dự án) – SĐT: 0868176774, Ema
       id: 'product2',
       icon: '🔮',
       title: 'Anno',
-      price: '25.000₫',
-      description: '',
+      price: '20.000₫ - 25.000₫',
+      description: productDescription2,
       badge: 'Coming',
       features: ['Sắp ra mắt!', 'Thiết kế độc quyền', 'Sản phẩm giới hạn'],
-      image: ['/products/anno/1.jpg'].map((img) => img),
-      comingSoon: true
+      image: ['/products/anno/1.jpg', '/products/anno/2.jpg', '/products/anno/3.jpg', '/products/anno/4.jpg', '/products/anno/5.jpg', '/products/anno/6.jpg', '/products/anno/7.jpg', '/products/anno/8.jpg', '/products/anno/9.jpg', '/products/anno/10.jpg', '/products/anno/11.jpg'].map((img) => img),
+      formLink: 'https://forms.gle/u7vH4B98GfcyJtdeA'
     }
   ];
 
