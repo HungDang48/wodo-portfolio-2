@@ -44,7 +44,7 @@ Sau vòng tay nhân ái, chúng mình tiếp tục lan tỏa tình yêu thương
 🧸 ANO thủ công dùng làm gì?
 Những em ano nhỏ xinh được làm thủ công với nhiều biểu cảm và hình dạng khác nhau, tạo điểm nhấn cho khăn quàng, túi xách, dây đeo, ... hoặc làm quà tặng đáng yêu.
 💰 Giá bán:
-Chỉ từ 20.000đ – 25.000đ/sản phẩm tùy loại hình dáng và độ chi tiết. Giá cực dễ thương cho một hành động cực kỳ tử tế!
+Chỉ từ 25.000đ/sản phẩm tùy loại hình dáng và độ chi tiết. Giá cực dễ thương cho một hành động cực kỳ tử tế!
 Chúng mình còn nhận móc các loại ano theo yêu cầu với giá 30.000đ/sản phẩm!!
 🌟 ĐẶC BIỆT TRONG TRẠI 95 NĂM:
 ✔️ Đặt tại chỗ – nhận hàng tận tay
@@ -85,7 +85,7 @@ Nguyễn Phạm Tường Vy – 0868 176 774
       description: productDescription2,
       badge: 'Coming',
       features: ['Sắp ra mắt!', 'Thiết kế độc quyền', 'Sản phẩm giới hạn'],
-      image: ['/products/anno/1.jpg', '/products/anno/2.jpg', '/products/anno/3.jpg', '/products/anno/4.jpg', '/products/anno/5.jpg', '/products/anno/6.jpg', '/products/anno/7.jpg', '/products/anno/8.jpg', '/products/anno/9.jpg', '/products/anno/10.jpg', '/products/anno/11.jpg'].map((img) => img),
+      image: ['/products/anno/1.jpg', '/products/anno/2.jpg', '/products/anno/3.jpg', '/products/anno/4.jpg', '/products/anno/5.jpg', '/products/anno/6.jpg', '/products/anno/7.jpg', '/products/anno/8.jpg', '/products/anno/9.jpg', ].map((img) => img),
       formLink: 'https://forms.gle/u7vH4B98GfcyJtdeA'
     }
   ];
