@@ -5,7 +5,6 @@ interface ImageItem {
     src: string;
     title: string;
     description: string;
-    date: string;
     category: string;
     tags: string[];
 }
@@ -19,7 +18,7 @@ interface ViewImageComponentsProps {
     onNext: () => void;
 }
 
-const ImageViewComponent: React.FC<ViewImageComponentsProps> = ({
+const ViewImageComponents: React.FC<ViewImageComponentsProps> = ({
     isOpen,
     currentIndex,
     images,
@@ -27,15 +26,6 @@ const ImageViewComponent: React.FC<ViewImageComponentsProps> = ({
     onPrevious,
     onNext
 }) => {
-    const formatDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('vi-VN', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    };
-
     const handlePrevious = (e: React.MouseEvent) => {
         e.stopPropagation();
         onPrevious();
@@ -62,7 +52,7 @@ const ImageViewComponent: React.FC<ViewImageComponentsProps> = ({
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (!isOpen || currentIndex < 0 || currentIndex >= images.length) {
-                return null;
+                return;
             }
 
             switch (e.key) {
@@ -101,15 +91,38 @@ const ImageViewComponent: React.FC<ViewImageComponentsProps> = ({
 
     const currentImage = images[currentIndex];
 
+    // Get category name for display
+    const getCategoryName = (categoryId: string) => {
+        const categories: Record<string, string> = {
+            'sinh-hoat': 'Sinh hoạt',
+            'hoi-vui-trang': 'Hội Vui Trăng',
+            'nau-banh-chung': 'Nấu Bánh Chưng',
+            'don-dep': 'Dọn Nhà Đón Tết'
+        };
+        return categories[categoryId] || categoryId;
+    };
+
     return (
         <div className="lightbox-overlay" onClick={handleOverlayClick}>
             <div className="lightbox-content" onClick={handleContentClick}>
                 {/* Close Button */}
-                <button className="close-btn" onClick={handleClose}>×</button>
+                <button className="close-btn" onClick={handleClose} aria-label="Đóng">×</button>
 
                 {/* Navigation Buttons */}
-                <button className="nav-btn left" onClick={handlePrevious}>‹</button>
-                <button className="nav-btn right" onClick={handleNext}>›</button>
+                <button 
+                    className="nav-btn left" 
+                    onClick={handlePrevious}
+                    aria-label="Ảnh trước"
+                >
+                    ‹
+                </button>
+                <button 
+                    className="nav-btn right" 
+                    onClick={handleNext}
+                    aria-label="Ảnh tiếp theo"
+                >
+                    ›
+                </button>
 
                 {/* Image Container */}
                 <div className="lightbox-image-container">
@@ -130,7 +143,9 @@ const ImageViewComponent: React.FC<ViewImageComponentsProps> = ({
                     <h3>{currentImage.title}</h3>
                     <p>{currentImage.description}</p>
                     <div className="lightbox-meta">
-                        <span className="date">{formatDate(currentImage.date)}</span>
+                        <span className="category-badge">
+                            📂 {getCategoryName(currentImage.category)}
+                        </span>
                         <div className="tags">
                             {currentImage.tags.map((tag, index) => (
                                 <span key={index} className="tag">#{tag}</span>
@@ -148,4 +163,4 @@ const ImageViewComponent: React.FC<ViewImageComponentsProps> = ({
     );
 };
 
-export default ImageViewComponent;
+export default ViewImageComponents;
