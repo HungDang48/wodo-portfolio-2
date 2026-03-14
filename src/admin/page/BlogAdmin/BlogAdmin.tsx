@@ -12,10 +12,6 @@ type Blog = {
   img: string | null;
 };
 
-interface BlogCardProps {
-  blog: Blog;
-}
-
 const BlogAdmin = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [editBlog, setEditBlog] = useState<Blog | null>(null);

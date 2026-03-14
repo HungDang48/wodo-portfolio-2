@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './ImageViewComponent.css';
 
 interface ImageItem {
@@ -36,9 +36,9 @@ const ViewImageComponents: React.FC<ViewImageComponentsProps> = ({
         onNext();
     };
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         onClose();
-    };
+    }, [onClose]);
 
     const handleOverlayClick = () => {
         handleClose();
@@ -70,7 +70,7 @@ const ViewImageComponents: React.FC<ViewImageComponentsProps> = ({
 
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, onPrevious, onNext]);
+    }, [isOpen, currentIndex, images.length, onPrevious, onNext, handleClose]);
 
     // Prevent body scroll when lightbox is open
     useEffect(() => {

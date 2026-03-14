@@ -16,10 +16,6 @@ type User = {
   avatar: string;
 };
 
-interface UserCardProps {
-  user: User;
-}
-
 const ProfileAdmin = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [editUser, setEditUser] = useState<User | null>(null);

@@ -121,7 +121,7 @@ const Header: React.FC = () => {
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [location]);
+  }, [location, isMenuOpen]);
 
   // Xử lý click outside để đóng menu
   useEffect(() => {

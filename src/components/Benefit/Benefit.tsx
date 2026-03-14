@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import './Benefit.css';
 
 const Benefit: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        // intersection logic reserved for future enhancements
       },
       {
         threshold: 0.1,

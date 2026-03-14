@@ -20,12 +20,14 @@ const HomeInfo = () => {
       }
     );
 
-    animatedRefs.current.forEach((el) => {
+    const elements = [...animatedRefs.current];
+
+    elements.forEach((el) => {
       if (el) observer.observe(el);
     });
 
     return () => {
-      animatedRefs.current.forEach((el) => {
+      elements.forEach((el) => {
         if (el) observer.unobserve(el);
       });
     };

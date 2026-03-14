@@ -321,7 +321,7 @@ const GalleryPage: React.FC = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [viewMode, setViewMode] = useState<'grid' | 'masonry'>('grid');
+  const [viewMode] = useState<'grid' | 'masonry'>('grid');
   const [isLiked, setIsLiked] = useState<Set<number>>(new Set());
   const [searchQuery, setSearchQuery] = useState('');
   const containerRef = useRef<HTMLDivElement | null>(null);

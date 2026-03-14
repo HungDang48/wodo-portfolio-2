@@ -102,10 +102,6 @@ Nguyễn Phạm Tường Vy – 0868 176 774
     document.body.style.overflow = 'auto';
   };
 
-  const buyProduct = () => {
-    alert('Chức năng mua hàng sẽ được kết nối với backend sau!');
-  };
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
