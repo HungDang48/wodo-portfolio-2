@@ -62,7 +62,8 @@ const HomeInfo = () => {
             <img src="/img/dien-hai.png" alt="Đoàn Điện Hải" className="partner-logo" />
             <img src="/img/gialong.png" alt="Đoàn Gia Long" className="partner-logo" />
             <img src="/img/vungtau.png" alt="Đoàn Vũng Tàu" className="partner-logo" />
-            <img src="/img/rakhoi.png" alt="Đoàn Ra Khơi" className="partner-logo" />
+             
+            <img src="/img/sanhbuoc.jpg" alt="Đoàn Ra Khơi" className="partner-logo" />
             <img src="/img/taophung.png" alt="Đoàn Tao Phùng" className="partner-logo" />
           </div>
         </div>
