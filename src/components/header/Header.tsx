@@ -28,8 +28,38 @@ const Header: React.FC = () => {
   const isVisibleRef = useRef(isVisible);
   const lastScrollYRef = useRef(0);
 
+  // Desktop dropdown (hover) - đóng trễ 1s để tránh flicker khi rê chuột qua khoảng hở
+  const [desktopDropdownOpen, setDesktopDropdownOpen] = useState<string | null>(null);
+  const desktopDropdownCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openDesktopDropdown = useCallback((label: string) => {
+    if (desktopDropdownCloseTimerRef.current) {
+      clearTimeout(desktopDropdownCloseTimerRef.current);
+      desktopDropdownCloseTimerRef.current = null;
+    }
+    setDesktopDropdownOpen(label);
+  }, []);
+
+  const scheduleCloseDesktopDropdown = useCallback((label: string) => {
+    if (desktopDropdownCloseTimerRef.current) {
+      clearTimeout(desktopDropdownCloseTimerRef.current);
+    }
+    desktopDropdownCloseTimerRef.current = setTimeout(() => {
+      setDesktopDropdownOpen((prev) => (prev === label ? null : prev));
+    }, 400);
+  }, []);
+
   // Hook để lấy thông tin route hiện tại
   const location = useLocation();
+
+  // Mỗi lần đổi route (sau khi click dropdown), đảm bảo dropdown desktop không bị kẹt.
+  useEffect(() => {
+    setDesktopDropdownOpen(null);
+    if (desktopDropdownCloseTimerRef.current) {
+      clearTimeout(desktopDropdownCloseTimerRef.current);
+      desktopDropdownCloseTimerRef.current = null;
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     isMenuOpenRef.current = isMenuOpen;
@@ -323,8 +353,18 @@ const Header: React.FC = () => {
           <nav className="nav" role="navigation" aria-label="Menu chính">
             {navItems.map((item, index) => (
               item.children ? (
-                <div className="nav-dropdown" key={item.label}>
-                  <button className="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+                <div
+                  className={`nav-dropdown ${desktopDropdownOpen === item.label ? 'dropdown-open' : ''}`}
+                  key={item.label}
+                  onMouseEnter={() => openDesktopDropdown(item.label)}
+                  onMouseLeave={() => scheduleCloseDesktopDropdown(item.label)}
+                >
+                  <button
+                    className="dropdown-toggle"
+                    type="button"
+                    aria-haspopup="true"
+                    aria-expanded={desktopDropdownOpen === item.label}
+                  >
                     <i className={`fa ${item.icon}`} aria-hidden="true"></i>
                     <span>{item.label}</span>
                   </button>
@@ -334,7 +374,14 @@ const Header: React.FC = () => {
                         key={child.to}
                         to={child.to}
                         className={location.pathname === child.to ? 'active' : ''}
-                        onClick={() => handleNavClick(child.to)}
+                        onClick={() => {
+                          setDesktopDropdownOpen(null);
+                          if (desktopDropdownCloseTimerRef.current) {
+                            clearTimeout(desktopDropdownCloseTimerRef.current);
+                            desktopDropdownCloseTimerRef.current = null;
+                          }
+                          handleNavClick(child.to);
+                        }}
                       >
                         {child.label}
                       </Link>
