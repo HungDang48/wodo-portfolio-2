@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './header.css';
+import MobileHamburgerButton from './MobileHamburgerButton';
 
 // Component Header chính
 const Header: React.FC = () => {
@@ -11,20 +12,36 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   // Trạng thái kiểm soát ẩn/hiện header khi scroll
   const [isVisible, setIsVisible] = useState(true);
-  // Lưu vị trí scroll trước đó
-  const [lastScrollY, setLastScrollY] = useState(0);
   // Trạng thái loading cho transitions
   const [isLoading, setIsLoading] = useState(false);
 
   // Ref để tham chiếu đến menu di động
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLElement | null>(null);
   // Ref để tham chiếu đến phần header
-  const headerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
   // Ref cho overlay
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
+
+  // Refs giúp scroll handler không bị re-create và tránh re-render không cần thiết
+  const isMenuOpenRef = useRef(isMenuOpen);
+  const isScrolledRef = useRef(isScrolled);
+  const isVisibleRef = useRef(isVisible);
+  const lastScrollYRef = useRef(0);
 
   // Hook để lấy thông tin route hiện tại
   const location = useLocation();
+
+  useEffect(() => {
+    isMenuOpenRef.current = isMenuOpen;
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    isScrolledRef.current = isScrolled;
+  }, [isScrolled]);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   // Toggle mở/đóng menu với hiệu ứng mượt mà
   const toggleMenu = useCallback(() => {
@@ -38,6 +55,7 @@ const Header: React.FC = () => {
 
       // Xử lý body scroll và focus management
       if (newState) {
+        setOpenDropdown(null);
         document.body.style.overflow = 'hidden';
         // Focus vào menu sau khi mở
         setTimeout(() => {
@@ -45,6 +63,7 @@ const Header: React.FC = () => {
           firstFocusableElement?.focus();
         }, 100);
       } else {
+        setOpenDropdown(null);
         document.body.style.overflow = '';
         // Focus trở lại nút menu
         setTimeout(() => {
@@ -60,6 +79,7 @@ const Header: React.FC = () => {
   // Đóng menu
   const closeMenu = useCallback(() => {
     setIsMenuOpen(false);
+    setOpenDropdown(null);
     document.body.style.overflow = '';
     document.body.style.filter = '';
 
@@ -70,58 +90,62 @@ const Header: React.FC = () => {
     }, 100);
   }, []);
 
-  // Hàm throttle để giới hạn tần suất thực hiện scroll handler
-  const throttle = (func: Function, limit: number) => {
-    let inThrottle: boolean = false;
-    return function (this: any, ...args: any[]) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => (inThrottle = false), limit);
-      }
-    };
-  };
-
   // Theo dõi scroll để thay đổi isScrolled, isVisible
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 10); // Thêm class `scrolled` nếu scroll > 10px
+      if (ticking) return;
+      ticking = true;
 
-      // Nếu người dùng cuộn xuống và vượt qua 100px thì ẩn header (trừ khi menu đang mở)
-      if (!isMenuOpen) {
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY || 0;
+
+        const isScrolledNext = currentScrollY > 10;
+        if (isScrolledNext !== isScrolledRef.current) {
+          isScrolledRef.current = isScrolledNext;
+          setIsScrolled(isScrolledNext);
         }
-      }
 
-      // Cập nhật vị trí scroll hiện tại
-      setLastScrollY(currentScrollY);
+        // Nếu người dùng cuộn xuống và vượt qua 100px thì ẩn header (trừ khi menu đang mở)
+        if (!isMenuOpenRef.current) {
+          const shouldHide = currentScrollY > lastScrollYRef.current && currentScrollY > 100;
+          const isVisibleNext = !shouldHide;
+          if (isVisibleNext !== isVisibleRef.current) {
+            isVisibleRef.current = isVisibleNext;
+            setIsVisible(isVisibleNext);
+          }
+        }
+
+        lastScrollYRef.current = currentScrollY;
+        ticking = false;
+      });
     };
 
-    // Gắn hàm xử lý với throttle
-    const throttledScroll = throttle(handleScroll, 10);
-    window.addEventListener('scroll', throttledScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Dọn dẹp khi unmount
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, [lastScrollY, isMenuOpen]);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Tự động đóng menu khi route thay đổi
+  const lastPathnameRef = useRef(location.pathname);
   useEffect(() => {
-    if (isMenuOpen) {
+    const pathnameChanged = lastPathnameRef.current !== location.pathname;
+    const menuWasOpen = isMenuOpenRef.current;
+
+    // Chỉ đóng menu khi route thay đổi (tránh việc bấm hamburger xong bị tự đóng ngay)
+    if (pathnameChanged && menuWasOpen) {
       setIsLoading(true);
       const timer = setTimeout(() => {
-        setIsMenuOpen(false);
+        closeMenu();
         setIsLoading(false);
-        document.body.style.overflow = '';
-        document.body.style.filter = '';
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [location, isMenuOpen]);
+
+    lastPathnameRef.current = location.pathname;
+  }, [location.pathname, closeMenu]);
 
   // Xử lý click outside để đóng menu
   useEffect(() => {
@@ -273,13 +297,8 @@ const Header: React.FC = () => {
     <>
       <header
         ref={headerRef}
-        className={`header-user ${isScrolled ? 'scrolled' : ''} ${isVisible ? '' : 'hidden'} ${isLoading ? 'loading' : ''}`}
+        className={`header-user ${isMenuOpen ? 'menu-open' : ''} ${isScrolled ? 'scrolled' : ''} ${isVisible ? '' : 'hidden'} ${isLoading ? 'loading' : ''}`}
         role="banner"
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1001,
-        }}
       >
         <div className="header-user-container">
           {/* Logo và nút menu */}
@@ -293,21 +312,11 @@ const Header: React.FC = () => {
               <span>WODO</span>
             </Link>
 
-            <button
-              className="menu-toggle"
-              onClick={toggleMenu}
-              aria-label={isMenuOpen ? 'Đóng menu di động' : 'Mở menu di động'}
-              aria-expanded={isMenuOpen}
-              aria-controls="mobile-nav"
-              aria-haspopup="true"
-              style={{ zIndex: 1004 }}
-            >
-              <span className={`hamburger ${isMenuOpen ? 'active' : ''}`} aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-            </button>
+            <MobileHamburgerButton
+              isMenuOpen={isMenuOpen}
+              onToggle={toggleMenu}
+              ariaControls="mobile-nav"
+            />
           </div>
 
           {/* Navigation trên desktop */}
@@ -341,8 +350,7 @@ const Header: React.FC = () => {
                   title={item.description}
                   onClick={() => handleNavClick(item.to)}
                   style={{
-                    animationDelay: `${index * 0.1}s`,
-                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    animationDelay: `${index * 0.1}s`
                   }}
                 >
                   <i className={`fa ${item.icon}`} aria-hidden="true"></i>
@@ -381,18 +389,6 @@ const Header: React.FC = () => {
         onClick={closeMenu}
         aria-hidden={!isMenuOpen}
         role="presentation"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100vh',
-          zIndex: 998,
-          pointerEvents: isMenuOpen ? 'auto' : 'none',
-          opacity: isMenuOpen ? 1 : 0,
-          visibility: isMenuOpen ? 'visible' : 'hidden',
-          transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-        }}
       />
 
       {/* Menu di động */}
@@ -403,18 +399,6 @@ const Header: React.FC = () => {
         role="navigation"
         aria-label="Menu di động"
         aria-hidden={!isMenuOpen}
-        style={{
-          position: 'fixed',
-          top: 0,
-          right: isMenuOpen ? 0 : '-100%',
-          width: 'min(420px, 90vw)',
-          height: '100vh',
-          zIndex: 999,
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-          pointerEvents: isMenuOpen ? 'auto' : 'none'
-        }}
       >
         <div className="mobile-nav-header">
           <span className="mobile-nav-title">Menu</span>
@@ -426,17 +410,21 @@ const Header: React.FC = () => {
               <div key={item.label} className="mobile-dropdown">
                 <button
                   className="mobile-dropdown-toggle"
+                  type="button"
                   aria-haspopup="true"
                   aria-expanded={openDropdown === item.label}
                   onClick={() => {
-                    setOpenDropdown(openDropdown === item.label ? null : item.label);
+                    // Use functional update to avoid stale `openDropdown` in rapid taps
+                    setOpenDropdown((prev) => (prev === item.label ? null : item.label));
                   }}
                 >
                   <i className={`fa ${item.icon}`} aria-hidden="true"></i>
                   <span>{item.label}</span>
                 </button>
 
-                <div className="mobile-dropdown-menu">
+                <div
+                  className={`mobile-dropdown-menu ${openDropdown === item.label ? 'active' : ''}`}
+                >
                   {item.children.map((child) => (
                     <Link
                       key={child.to}

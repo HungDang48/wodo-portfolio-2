@@ -64,6 +64,20 @@
   border-bottom: 1px solid var(--glass-border-strong);
 }
 
+/* Used by Header.tsx className toggles */
+.header-user.hidden {
+  transform: translateY(-110%);
+}
+
+.header-user.loading {
+  opacity: 0.95;
+}
+
+/* When menu is open, prevent header from receiving clicks behind overlay */
+.header-user.menu-open {
+  pointer-events: none;
+}
+
 .header-user-container {
   display: flex;
   justify-content: space-between;
@@ -288,14 +302,14 @@
   background: rgba(45, 55, 72, 0.4);
   backdrop-filter: blur(8px);
   opacity: 0;
-  visibility: hidden;
-  transition: var(--transition-smooth);
-  z-index: 999;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  z-index: 1002;
 }
 
 .mobile-nav-overlay.active {
   opacity: 1;
-  visibility: visible;
+  pointer-events: auto;
 }
 
 .mobile-nav {
@@ -307,17 +321,22 @@
   background: var(--white);
   border-left: 1px solid var(--gray-200);
   box-shadow: var(--shadow-xl);
-  z-index: 1000;
+  z-index: 1003;
   display: flex;
   flex-direction: column;
-  visibility: hidden;
   opacity: 0;
-  transition: var(--transition-smooth);
+  transform: translateX(100%);
+  will-change: transform;
+  pointer-events: none;
+  transition:
+    transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.2s ease-out;
 }
 
 .mobile-nav.active {
-  visibility: visible;
   opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
 .mobile-nav-header {
@@ -457,6 +476,15 @@
 .mobile-dropdown-menu {
   background: var(--gray-50);
   border-top: 1px solid var(--gray-200);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease-out;
+}
+
+.mobile-dropdown-menu.active {
+  max-height: 360px; /* đủ chứa các item dropdown */
+  opacity: 1;
 }
 
 .mobile-dropdown-menu a {
@@ -565,12 +593,7 @@
   box-shadow: var(--shadow-md);
 }
 
-.nav-dropdown:hover .dropdown-menu {
-  display: block;
-}
-
 .dropdown-menu {
-  display: none;
   position: absolute;
   top: calc(100% + 0.5rem);
   left: 0;
@@ -581,6 +604,19 @@
   z-index: 10;
   min-width: 200px;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease-out,
+    transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .dropdown-menu a {
