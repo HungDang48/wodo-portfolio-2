@@ -4,109 +4,95 @@ import "./AboutUs.css";
 interface Member {
   id: number;
   name: string;
-  unit: string;
   role: string;
   personality: string;
   avatar: string;
 }
 
-// Dữ liệu tĩnh cho các thành viên, sắp xếp theo vai trò kim tự tháp
-const leader: Member = {
-  id: 1,
-  name: "Khánh Ngân",
-  unit: "Leader",
-  role: "Leader",
-  personality: "Nhiệt huyết, sáng tạo, trách nhiệm",
-  avatar: "/img/khanhngan.png",
-};
-
-const deputies: Member[] = [
+const members: Member[] = [
+  {
+    id: 1,
+    name: "Khánh Ngân",
+    role: "Toán trưởng",
+    personality: "Nhiệt huyết, sáng tạo, trách nhiệm",
+    avatar: "/img/khanhngan.png",
+  },
   {
     id: 2,
-    name: "Quang Khánh",
-    unit: "Deputy Leader",
-    role: "Deputy Leader",
-    personality: "Tỉ mỉ, tinh tế, thân thiện",
-    avatar: "/img/quangkhanh.png",
+    name: "Tường Vy",
+    role: "Thành viên",
+    personality: "Vui vẻ, hòa đồng, nhiệt tình",
+    avatar: "/img/tuongvy.png",
   },
   {
     id: 3,
-    name: "Hoàng Nguyên",
-    unit: "Deputy Leader",
-    role: "Deputy Leader",
-    personality: "Năng động, trách nhiệm, sáng tạo",
-    avatar: "/img/hoangnguyen.png",
-  },
-];
-
-const members: Member[] = [
-  {
-    id: 4,
-    name: "Việt Hưng",
-    unit: "Thành viên",
-    role: "Member",
+    name: "Việt Hưng",
+    role: "Thành viên",
     personality: "Sáng tạo, linh hoạt, giao tiếp tốt",
     avatar: "/img/viethung.png",
   },
   {
+    id: 4,
+    name: "Quang Khánh",
+    role: "Thành viên",
+    personality: "Tỉ mỉ, tinh tế, thân thiện",
+    avatar: "/img/quangkhanh.png",
+  },
+  {
     id: 5,
-    name: "Bảo Ngọc",
-    unit: "Thành viên",
-    role: "Member",
-    personality: "Chăm chỉ, logic, hỗ trợ tốt",
-    avatar: "/img/baongoc.png",
+    name: "Hoàng Nguyên",
+    role: "Thành viên",
+    personality: "Năng động, trách nhiệm, sáng tạo",
+    avatar: "/img/hoangnguyen.png",
   },
   {
     id: 6,
-    name: "Tường Vy",
-    unit: "Thành viên",
-    role: "Member",
-    personality: "Vui vẻ, hòa đồng, nhiệt tình",
-    avatar: "/img/tuongvy.png",
+    name: "Bảo Ngọc",
+    role: "Thành viên",
+    personality: "Chăm chỉ, logic, hỗ trợ tốt",
+    avatar: "/img/baongoc.png",
   },
 ];
 
 const AboutUs = () => {
-  // Animation không còn cần thiết vì không còn card riêng lẻ
   return (
-    <div className="about-container pyramid-layout">
-      <div className="box">
-        <h1 className="about-title">THÀNH VIÊN TOÁN WODO</h1>
-        <div className="pyramid">
-          {/* Leader */}
-          <div className="pyramid-row leader-row">
-            <div className="pyramid-member leader">
-              <img src={leader.avatar} alt={leader.name} className="member-image" />
-              <h2 className="member-name">{leader.name}</h2>
-              <p className="member-role">{leader.unit} - {leader.role}</p>
-              <p className="member-personality">"{leader.personality}"</p>
-            </div>
-          </div>
-          {/* Deputies */}
-          <div className="pyramid-row deputies-row">
-            {deputies.map((member) => (
-              <div className="pyramid-member deputy" key={member.id}>
-                <img src={member.avatar} alt={member.name} className="member-image" />
-                <h2 className="member-name">{member.name}</h2>
-                <p className="member-role">{member.unit} - {member.role}</p>
-                <p className="member-personality">"{member.personality}"</p>
+    <section className="about-page">
+      <div className="about-shell">
+        <div className="about-hero">
+          <span className="about-label">WODO TEAM</span>
+          <h1 className="about-title">Thành viên Toán WODO</h1>
+          <p className="about-subtitle">
+            Một tập thể trẻ trung, sáng tạo và luôn sẵn sàng đồng hành cùng nhau
+            trong học tập, hoạt động và phát triển kỹ năng.
+          </p>
+        </div>
+
+        <div className="team-grid">
+          {members.map((member) => (
+            <article className="team-card" key={member.id}>
+              <div className="team-card-glow" />
+
+              <div className="team-card-image-wrap">
+                <img
+                  src={member.avatar}
+                  alt={member.name}
+                  className="team-card-image"
+                />
               </div>
-            ))}
-          </div>
-          {/* Members */}
-          <div className="pyramid-row members-row">
-            {members.map((member) => (
-              <div className="pyramid-member member" key={member.id}>
-                <img src={member.avatar} alt={member.name} className="member-image" />
-                <h2 className="member-name">{member.name}</h2>
-                <p className="member-role">{member.unit} - {member.role}</p>
-                <p className="member-personality">"{member.personality}"</p>
+
+              <div className="team-card-content">
+                <span className="team-badge">{member.role}</span>
+                <h2 className="team-card-name">{member.name}</h2>
+                <p className="team-card-role">Toán WODO</p>
+                <p className="team-card-personality">
+                  “{member.personality}”
+                </p>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
