@@ -279,13 +279,6 @@ const imageData: ImageItem[] = [
   },
   {
     src: process.env.PUBLIC_URL + "/wodo-img/scout40.jpg",
-    title: "Sinh hoạt chung",
-    description: "Sinh hoạt chung giữa các bạn trong mái ấm và các bạn tráng sinh",
-    category: "don-dep",
-    tags: ["sinh hoạt"]
-  },
-  {
-    src: process.env.PUBLIC_URL + "/wodo-img/scout40.jpg",
     title: "Chuyên đề",
     description: "Chuyên đề bạo lực của các bạn tráng sinh",
     category: "don-dep",

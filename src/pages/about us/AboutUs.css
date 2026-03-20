@@ -212,3 +212,88 @@
     font-size: 0.94rem;
   }
 }
+
+@media (max-width: 480px) {
+  .about-page {
+    padding: 28px 12px 48px;
+  }
+
+  .about-hero {
+    margin-bottom: 24px;
+  }
+
+  .about-label {
+    margin-bottom: 12px;
+    padding: 7px 14px;
+    font-size: 0.76rem;
+  }
+
+  .about-title {
+    font-size: clamp(1.9rem, 7vw, 2.6rem);
+    line-height: 1.08;
+  }
+
+  .about-subtitle {
+    margin: 14px auto 0;
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .team-grid {
+    gap: 16px;
+  }
+
+  .team-card {
+    border-radius: 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .team-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .team-card-image-wrap {
+    height: 250px;
+    padding: 14px 14px 0;
+  }
+
+  .team-card-image-wrap::before {
+    inset: 16px 16px auto 16px;
+    height: 170px;
+    border-radius: 18px;
+  }
+
+  .team-card-content {
+    padding: 16px 16px 18px;
+  }
+
+  .team-badge {
+    min-height: 32px;
+    font-size: 0.78rem;
+  }
+
+  .team-card-name {
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+
+  .team-card-role,
+  .team-card-personality {
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .about-page {
+    padding: 24px 10px 44px;
+  }
+
+  .team-card-image-wrap {
+    height: 230px;
+  }
+
+  .team-card-image-wrap::before {
+    height: 155px;
+    border-radius: 16px;
+  }
+}
